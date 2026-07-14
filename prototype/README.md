@@ -224,7 +224,7 @@ token counts are logged and discarded, and the `report_logs` table has no INSERT
 visit JSON
     │
     ├─► guardrails.js ──► deterministic facts (JavaScript, no model)
-    │                       • amp draw vs nameplate FLA, 7-tier scale (NEC 430.32)
+    │                       • amp draw vs nameplate FLA, 7-tier scale (own heuristic)
     │                       • solids %, filter differential, dissolved oxygen
     │                       • cross-component root-cause correlation
     │                       • explicit REFUSALS where data is missing

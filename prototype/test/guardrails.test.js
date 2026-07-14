@@ -59,7 +59,7 @@ test('amp draw at 84% of nameplate FLA is normal and asserts no severity', () =>
   assert.deepEqual(result.severities, []);
 });
 
-test('amp draw at 130% of nameplate FLA classifies CRITICAL - Overload (NEC 430.32)', () => {
+test('amp draw at 130% of nameplate FLA classifies CRITICAL - Overload', () => {
   const result = computeAmpDrawDiagnostics({
     findings: { pump_0_pump_current_draw: 9.4 },
     components: [{ type: 'pump', specs: { nameplateAmps: 7.2 } }],

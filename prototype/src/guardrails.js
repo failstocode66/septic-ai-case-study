@@ -39,7 +39,15 @@ export const THRESHOLDS = {
  * nameplate Full Load Amps (FLA). Each tier carries a causal explanation so the
  * model has something true to narrate instead of inventing a story.
  *
- * The 125% ceiling is the NEC 430.32 overload-trip threshold.
+ * PROVENANCE: this scale is SepticScribe's own engineering heuristic, calibrated
+ * to residential effluent pumps from field experience. It is NOT reproduced from
+ * any published standard and must not be attributed to one. (An earlier version
+ * of this file credited "NEC 430, DOE motor efficiency standards" — wrong twice
+ * over: NEC 430.32 sizes motor *overload protection devices*, it does not define
+ * a diagnostic scale; and the NEC is the US code, whereas BC electrical work is
+ * governed by the Canadian Electrical Code, CSA C22.1. See CASE-STUDY.md §3.4.)
+ * The guardrail's authority comes from being deterministic and nameplate-derived,
+ * not from a citation.
  */
 const AMP_SEVERITY_TIERS = [
   { min: 0, max: 30, label: 'CRITICAL - No Load',
@@ -55,7 +63,7 @@ const AMP_SEVERITY_TIERS = [
   { min: 115, max: 125, label: 'WARNING - Overload',
     detail: 'Pump drawing significantly above nameplate rating. Possible causes: clogged impeller or discharge, debris in pump, worn bearings increasing friction, excessive discharge head from pipe restrictions.' },
   { min: 125, max: Infinity, label: 'CRITICAL - Overload',
-    detail: 'Motor damage imminent or occurring. Exceeds the NEC 430.32 trip threshold of 125% FLA. Possible causes: seized or binding impeller, severe pipe obstruction, failed bearing, locked rotor condition approaching.' },
+    detail: 'Motor damage imminent or occurring. Sustained draw above 125% of nameplate FLA is beyond the overload-protection band that motor protection is normally sized to (see the installation\'s governing electrical code). Possible causes: seized or binding impeller, severe pipe obstruction, failed bearing, locked rotor condition approaching.' },
 ];
 
 /**
@@ -158,7 +166,7 @@ export function computeAmpDrawDiagnostics({ findings = {}, components = [] }) {
   const text = `PUMP AMP DRAW DIAGNOSTIC (pre-computed from manufacturer nameplate data -- AUTHORITATIVE, DO NOT override):
 ${lines.join('\n')}
 
-IMPORTANT: These classifications are computed server-side from manufacturer nameplate data and industry-standard thresholds (NEC 430, DOE motor efficiency standards). You MUST use these exact severity classifications in your report. Do NOT rationalize, downplay, soften, or reinterpret any CRITICAL or WARNING classification -- they indicate real equipment problems requiring immediate attention. If a classification says CRITICAL, the report says CRITICAL.`;
+IMPORTANT: These classifications are computed server-side from the manufacturer's nameplate full-load amperage using SepticScribe's diagnostic severity scale. (The scale is our own engineering heuristic, calibrated to residential effluent pumps -- it is not reproduced from any published standard, and you must not attribute it to one or cite a code clause for it.) You MUST use these exact severity classifications in your report. Do NOT rationalize, downplay, soften, or reinterpret any CRITICAL or WARNING classification -- they indicate real equipment problems requiring immediate attention. If a classification says CRITICAL, the report says CRITICAL.`;
 
   return { text, severities, refusals };
 }
