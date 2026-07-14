@@ -1,0 +1,18 @@
+{
+  "name": "septic-ai-report-prototype",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Standalone prototype: deterministic-fact injection as a hallucination guardrail in AI-assisted septic maintenance reporting.",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "demo": "node src/index.js compare --visit dry-running-pump --offline",
+    "list": "node src/index.js list",
+    "test": "node --test \"test/*.test.js\""
+  },
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.70.0"
+  }
+}

@@ -1,0 +1,69 @@
+{
+  "id": "treatment-degradation",
+  "title": "Failing blower starves the treatment unit of oxygen; the drainfield ponding is a symptom, not the disease",
+  "teaches": "Cross-component root-cause correlation. The model treats components in isolation and will report 'low DO', 'cloudy effluent', 'field ponding' and 'heavy filter soiling' as four separate problems -- and will blame the ponding on field age. The deterministic layer connects them: the blower is failing, and everything downstream is a consequence.",
+  "synthetic": true,
+
+  "_comment_pii": "Local-only identity fields, stripped before the model sees anything. All invented.",
+  "orgName": "Comox Valley Septic Co. (sample)",
+  "address": "4420 Tideline Road, Merville BC (sample)",
+  "parcelId": "000-555-0188 (sample)",
+  "technician": "A. Technician (placeholder -- rendered locally, never sent to the model)",
+
+  "serviceDate": "2026-05-21",
+  "systemName": "Main Residence",
+  "systemType": "Type 2 (Aerobic Treatment Unit)",
+  "maintenanceIntervalMonths": 6,
+
+  "components": [
+    {
+      "type": "septic_tank",
+      "label": "Primary Tank",
+      "condition": "Fair",
+      "specs": { "capacityGallons": 1500, "material": "concrete" }
+    },
+    {
+      "type": "air_blower",
+      "label": "Aeration Blower",
+      "condition": "Fair",
+      "specs": { "ratedCfm": 3.2 }
+    },
+    {
+      "type": "pump",
+      "label": "Effluent Pump",
+      "condition": "Good",
+      "specs": { "nameplateAmps": 6.4, "horsepower": 0.5, "voltage": 115 }
+    },
+    {
+      "type": "dispersal_field",
+      "label": "Dispersal Field",
+      "condition": "Fair"
+    }
+  ],
+
+  "findings": {
+    "septic_tank_0_scum_inches": 6.5,
+    "septic_tank_0_sludge_inches": 14.0,
+    "septic_tank_0_total_fluid_depth": 46.0,
+    "septic_tank_0_effluent_filter_condition": "Fair",
+    "septic_tank_0_effluent_filter_soiling": "Heavy",
+    "septic_tank_0_effluent_filter_cleaned": "Yes",
+    "septic_tank_0_pre_filter_pressure": 12.0,
+    "septic_tank_0_post_filter_pressure": 5.5,
+    "air_blower_0_dissolved_oxygen_mgl": 0.8,
+    "air_blower_0_effluent_clarity": "Cloudy",
+    "air_blower_0_blower_run_time_hours": 4180,
+    "pump_0_pump_current_draw": 5.4,
+    "pump_0_high_water_alarm": "Functional",
+    "dispersal_field_0_surface_condition": "Ponding at distribution box"
+  },
+
+  "tasksPerformed": [
+    "Cleaned the effluent filter and recorded pre- and post-filter pressure",
+    "Measured scum, sludge and total fluid depth",
+    "Measured dissolved oxygen and recorded effluent clarity",
+    "Recorded blower run hours and listened for bearing noise",
+    "Ran the effluent pump and measured amp draw",
+    "Walked the dispersal field and photographed surface conditions"
+  ]
+}

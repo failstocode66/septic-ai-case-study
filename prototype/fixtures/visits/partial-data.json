@@ -1,0 +1,65 @@
+{
+  "id": "partial-data",
+  "title": "Sludge never measured; pump has no nameplate on file. Two holes the model must refuse to fill.",
+  "teaches": "Designed refusal. The single most dangerous documentation habit in this trade is letting a missing measurement read as a normal one. Sludge depth was not measured, so the solids percentage CANNOT be computed -- but scum and fluid depth are both present, which is exactly enough to tempt a model into computing something. The pump's nameplate FLA is not on file, so its amp draw cannot be classified at all. The deterministic layer declines both, out loud, and forbids the model from supplying the missing judgement.",
+  "synthetic": true,
+
+  "_comment_pii": "Local-only identity fields, stripped before the model sees anything. All invented.",
+  "orgName": "Comox Valley Septic Co. (sample)",
+  "address": "2745 Millstone Avenue, Cumberland BC (sample)",
+  "parcelId": "000-555-0231 (sample)",
+  "technician": "A. Technician (placeholder -- rendered locally, never sent to the model)",
+
+  "serviceDate": "2026-06-02",
+  "systemName": "Guest Cottage",
+  "systemType": "Type 2 (Aerobic Treatment Unit)",
+  "maintenanceIntervalMonths": 12,
+
+  "components": [
+    {
+      "type": "septic_tank",
+      "label": "Primary Tank",
+      "condition": "Fair",
+      "specs": { "capacityGallons": 900, "material": "polyethylene" }
+    },
+    {
+      "type": "pump",
+      "label": "Effluent Pump",
+      "condition": "Fair",
+      "specs": { "horsepower": 0.5, "voltage": 115 }
+    },
+    {
+      "type": "dispersal_field",
+      "label": "Dispersal Field",
+      "condition": "Good"
+    }
+  ],
+
+  "findings": {
+    "septic_tank_0_scum_inches": 5.5,
+    "septic_tank_0_total_fluid_depth": 44.0,
+    "septic_tank_0_effluent_filter_condition": "Fair",
+    "septic_tank_0_effluent_filter_soiling": "Moderate",
+    "septic_tank_0_effluent_filter_cleaned": "Yes",
+    "pump_0_pump_current_draw": 3.1,
+    "pump_0_high_water_alarm": "Functional",
+    "dispersal_field_0_surface_condition": "Dry"
+  },
+
+  "notMeasured": {
+    "sludge_inches": "Sludge depth was not measured on this visit -- the sludge judge was not on the truck.",
+    "dissolved_oxygen_mgl": "Dissolved oxygen was not measured on this visit. This is an aerobic treatment unit, so the absence is itself worth recording."
+  },
+
+  "notOnFile": {
+    "pump_0_nameplate_amps": "Nameplate full-load amps for this pump are not recorded in the equipment file."
+  },
+
+  "tasksPerformed": [
+    "Cleaned the effluent filter",
+    "Measured scum thickness and total fluid depth",
+    "Ran the effluent pump and measured amp draw",
+    "Tested the high water alarm",
+    "Walked the dispersal field"
+  ]
+}

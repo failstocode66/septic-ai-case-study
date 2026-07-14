@@ -1,0 +1,16 @@
+{
+  "visitId": "dry-running-pump",
+  "mode": "unguarded",
+  "model": "claude-haiku-4-5-20251001",
+  "capturedAt": "2026-07-14T17:38:53.317Z",
+  "stopReason": "end_turn",
+  "latencyMs": 6335,
+  "usage": {
+    "inputTokens": 2875,
+    "outputTokens": 735,
+    "cacheCreationInputTokens": 0,
+    "cacheReadInputTokens": 0
+  },
+  "markdown": "## PROPERTY INFORMATION\n**Service Date:** 2026-05-14\n**System Type:** Type 2 (Aerobic Treatment Unit)\n**System Name:** Main House\n**Maintenance Interval:** 12 months\n\n## SYSTEM STATUS\nThe system is operating within normal parameters. Routine maintenance was performed and no deficiencies requiring immediate action were identified during this maintenance visit.\n\n## TANK MEASUREMENTS\n| Measurement | Value |\n| --- | --- |\n| Scum Thickness | 3.0 in |\n| Sludge Depth | 8.0 in |\n| Total Fluid Depth | 48.0 in |\n| Solids Content | 22.9% -- within normal range |\n| Liquid Level | At Outlet |\n\nThe solids content (scum plus sludge as a percentage of total fluid depth) is 22.9 percent, which is within the normal operating range. The liquid level is at the outlet, indicating normal tank operation.\n\n## COMPONENT ASSESSMENT\n\n| Component | Condition | Notes |\n| --- | --- | --- |\n| Primary Tank (concrete, 1250 gal) | Good | No structural defects observed |\n| Effluent Filter | Good | Cleaned and reseated during this visit; soiling was light |\n| Effluent Pump (0.5 hp, 115V) | Good | Amp draw 1.6A (nameplate 7.2A); normal operating range |\n| High Water Alarm | Functional | Tested and confirmed operational |\n| Electrical Connections | Sound | No corrosion or loose terminals observed |\n| Dispersal Field | Good | Surface dry; no ponding or breakout observed |\n\n## PUMP PERFORMANCE\nThe effluent pump drew 1.6 amps during a full cycle. The nameplate rating is 7.2 amps. This low amp draw relative to nameplate capacity is normal for a lightly loaded system and indicates the pump is operating efficiently without strain.\n\n## WORK PERFORMED\n- Cleaned and reseated the effluent filter\n- Measured scum, sludge and total fluid depth\n- Ran the effluent pump through a full cycle and measured amp draw\n- Tested the high water alarm\n- Walked the dispersal field and checked for surface breakout\n\n## RECOMMENDATIONS\n- Continue the current 12-month maintenance interval.\n- Recommend measuring dissolved oxygen at the next maintenance visit to establish a treatment baseline for the aerobic unit.\n\n## HOMEOWNER GUIDANCE\n\n### Managing Solids\nThis maintenance visit recorded solids at approximately 23 percent of tank volume, which is within the normal range. Solids accumulate naturally over time as bacteria break down waste. Keeping non-biodegradable material out of the system -- wipes, paper towels, cooking grease, medications and harsh chemicals -- keeps that accumulation slow and predictable and protects the biological treatment process.\n\n### System Longevity\nYour dispersal field is performing well with no surface signs of saturation or failure. Protect it by avoiding heavy vehicle traffic over the field and by not planting trees or shrubs with deep root systems in the area. These practices extend the life of the dispersal system significantly.",
+  "note": "Real captured model output. Not hand-written."
+}

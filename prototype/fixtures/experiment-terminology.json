@@ -1,0 +1,110 @@
+{
+  "measuredAt": "2026-07-14T18:30:10.074Z",
+  "model": "claude-haiku-4-5",
+  "temperature": 0.3,
+  "trialsPerCondition": 12,
+  "visit": "dry-running-pump",
+  "scope": "One synthetic visit, one model, one temperature. A mechanism demonstration, not an efficacy guarantee.",
+  "definition": {
+    "assertion": "THE LEAK. The model asserts the regulated act occurred: the nouns (\"inspection\"/\"inspections\"/\"inspector\"), or the past participle used attributively/actively (\"components inspected during this visit\", \"we inspected the tank\"). This is what misrepresents the technician's scope of practice.",
+    "recommendation": "NOT a leak, counted separately. A forward-looking recommendation using the ordinary verb, including the passive (\"the pump must be inspected by a technician\") and the causative (\"have this inspected\"). Asserts nothing about what this visit was.",
+    "allowed": "\"inspection port(s)\" -- a fixed industry name for a physical opening in the tank."
+  },
+  "rawOutputs": "fixtures/experiment-raw/<condition>-<trial>.json -- every model response, verbatim, so this run can be re-scored against any other definition.",
+  "conditions": {
+    "rule-off_clean": {
+      "label": "rule OFF / clean exemplar",
+      "terminologyRule": false,
+      "poisonedExemplar": false,
+      "trials": 12,
+      "assertedInspection": 1,
+      "assertionRatePct": 8,
+      "assertionExamples": [
+        "he motor if left unaddressed. The pump needs immediate inspection and repair. Until it is fixed, your system cannot trea"
+      ],
+      "advisoryVerbTrials": 12,
+      "advisoryExamples": [
+        "em in this condition. A qualified pump technician must inspect the pump discharge line for disconnection or blockage,",
+        "system in this condition. A qualified technician must inspect the pump intake, impeller, and discharge line to ident",
+        "he pump in this condition. Have a qualified technician inspect the pump intake, impeller, and discharge line to ident",
+        "The effluent pump is operating at no load and must be inspected and repaired or replaced without delay. Do not continu"
+      ],
+      "assertionTrialsHandVerified": 0,
+      "assertionRatePctHandVerified": 0
+    },
+    "rule-off_poison": {
+      "label": "rule OFF / poisoned exemplar  <- PRODUCTION",
+      "terminologyRule": false,
+      "poisonedExemplar": true,
+      "trials": 12,
+      "assertedInspection": 7,
+      "assertionRatePct": 58,
+      "assertionExamples": [
+        "of motor damage from overheating. All other components inspected during this visit are in good condition, but the pump",
+        "ext scheduled maintenance visit. ### Tank Solids Your inspection revealed solids at 22.9 percent of tank volume, which",
+        "ect the pump and discharge line. ### Tank Solids Your inspection revealed solids at 22.9 percent of tank volume, which",
+        "IMMEDIATE ACTION REQUIRED:** 1. **Pump Discharge Line Inspection and Repair** -- The pump is operating under no load. I"
+      ],
+      "advisoryVerbTrials": 12,
+      "advisoryExamples": [
+        "inue operating the system. Have a qualified technician inspect the pump impeller, discharge line, and check valve. If",
+        "he next maintenance cycle, have a qualified technician inspect the pump discharge line for disconnection or blockage,",
+        "ed for the effluent pump. The pump must be stopped and inspected for impeller integrity, discharge line continuity, and",
+        "ct a licensed septic service technician immediately to inspect the pump, discharge line and tank connections. ### So"
+      ],
+      "assertionTrialsHandVerified": 6,
+      "assertionRatePctHandVerified": 50
+    },
+    "rule-on_poison": {
+      "label": "rule ON  / poisoned exemplar  <- the fix, stressed",
+      "terminologyRule": true,
+      "poisonedExemplar": true,
+      "trials": 12,
+      "assertedInspection": 0,
+      "assertionRatePct": 0,
+      "assertionExamples": [],
+      "advisoryVerbTrials": 0,
+      "advisoryExamples": [],
+      "assertionTrialsHandVerified": 0,
+      "assertionRatePctHandVerified": 0
+    },
+    "rule-on_clean": {
+      "label": "rule ON  / clean exemplar     <- prototype default",
+      "terminologyRule": true,
+      "poisonedExemplar": false,
+      "trials": 12,
+      "assertedInspection": 0,
+      "assertionRatePct": 0,
+      "assertionExamples": [],
+      "advisoryVerbTrials": 0,
+      "advisoryExamples": [],
+      "assertionTrialsHandVerified": 0,
+      "assertionRatePctHandVerified": 0
+    }
+  },
+  "rescoredAt": "2026-07-14T18:39:18.260Z",
+  "handAdjudication": {
+    "why": "The automated classifier is a heuristic over English, not a parser. Every occurrence in all 48 stored outputs was therefore read and classified by hand. Where the classifier and the human disagree, BOTH numbers are reported. The raw outputs are committed so anyone can check this adjudication.",
+    "assertion": "The report claims THIS visit was, or included, an inspection. Two phrasings occurred: \"All other components inspected during this visit are in good condition\" and \"Your inspection revealed solids at 22.9 percent\" -- the latter copied almost verbatim from the poisoned exemplar.",
+    "recommendation": "The report recommends that someone examine the pump in future: \"must be inspected\", \"until the pump is inspected\", \"have this inspected\", \"needs immediate inspection and repair\". Ordinary English. Asserts nothing about what this visit was. NOT a violation.",
+    "results": {
+      "rule-off_clean": {
+        "assertionTrials": 0,
+        "note": "All 6 flagged trials were future repair recommendations. The model never once claimed this visit was an inspection."
+      },
+      "rule-off_poison": {
+        "assertionTrials": 6,
+        "note": "Assertions in trials 04,05,07,09,10,11. Trials 04 and 05 reproduce the poisoned exemplars own sentence, \"Your inspection revealed...\", in homeowner-facing prose."
+      },
+      "rule-on_poison": {
+        "assertionTrials": 0,
+        "note": "No form of the word appeared at all."
+      },
+      "rule-on_clean": {
+        "assertionTrials": 0,
+        "note": "No form of the word appeared at all."
+      }
+    },
+    "gateOverBlocks": "The shipped gate blocks the NOUN unconditionally, so it also blocks a future-inspection recommendation (\"the pump needs immediate inspection\"). That is a deliberate, conservative choice for a blocking control: measured cost was 1/12 (clean) and 1/12 (poisoned) unguarded trials over-blocked, and the corrective regeneration simply rewords them. Gate-block rate is therefore 1/12 and 7/12; the hand-verified ASSERTION rate is 0/12 and 6/12."
+  }
+}

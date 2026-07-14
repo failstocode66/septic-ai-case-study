@@ -1,0 +1,27 @@
+{
+  "id": "worked-example",
+  "title": "The record behind the worked example in CASE-STUDY.md 3.4 and the prompt sizes in 4.1",
+  "synthetic": true,
+  "teaches": "All three deterministic injectors fire at once: a dry-running pump (22% of nameplate FLA), solids in the tank, a degraded aerobic treatment stage with an impaired blower, a heavily soiled effluent filter, and ponding downstream. This is the exact record that produces the numbers in the 4.1 table, committed so they can be reproduced rather than taken on trust.",
+  "note": "Component types and finding-key field ids are the REAL ones from Backend/componentInspectionRegistry.json. Findings are stored prefixed with the component's index within its type (pump_0_..., aerobic_treatment_unit_0_...). Getting these wrong is not cosmetic: reading a field id the registry does not define is exactly how the guardrails in this system have twice ended up silently dead on real data (CASE-STUDY.md 5.8).",
+  "date": "2026-06-13",
+  "systemType": "Type 2 (Aerobic Treatment Unit)",
+  "healthScore": 48,
+  "components": [
+    { "type": "septic_tank", "label": "Primary Tank", "specs": { "capacityGallons": 1250, "material": "concrete" } },
+    { "type": "aerobic_treatment_unit", "label": "Treatment Unit", "specs": {} },
+    { "type": "pump", "label": "Effluent Pump", "specs": { "nameplateAmps": 7.2 } },
+    { "type": "drainfield_gravity", "label": "Dispersal Field", "specs": {} }
+  ],
+  "findings": {
+    "septic_tank_0_scum_inches": 6,
+    "septic_tank_0_sludge_inches": 12,
+    "septic_tank_0_total_fluid_depth": 48,
+    "septic_tank_0_effluent_filter_soiling": "Heavy",
+    "aerobic_treatment_unit_0_dissolved_oxygen_mgl": 1.2,
+    "aerobic_treatment_unit_0_effluent_quality": "Cloudy",
+    "aerobic_treatment_unit_0_blower_operating": "Yes - Abnormal Noise",
+    "pump_0_pump_current_draw": 1.6,
+    "drainfield_gravity_0_surface_condition": "Minor ponding at distribution box"
+  }
+}

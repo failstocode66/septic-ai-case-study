@@ -1,0 +1,59 @@
+{
+  "id": "dry-running-pump",
+  "title": "Effluent pump drawing 22% of nameplate FLA -- a dry-running motor, inside an otherwise healthy system",
+  "teaches": "Hallucination-as-reassurance. Every other reading on this visit is good. Without the deterministic guardrail the model averages the one alarming number into the surrounding calm and writes 'amp draw was low; continue to monitor.' The pump is burning itself out.",
+  "synthetic": true,
+
+  "_comment_pii": "address / parcelId / technician / orgName are LOCAL-ONLY. src/prompt.js:redactForModel strips them before anything is sent to the model; the document layer composes them locally. All values are invented: 'Saltmarsh Way' is not a real street, the parcel ID uses an impossible 000- sentinel block, and no real person is named.",
+  "orgName": "Comox Valley Septic Co. (sample)",
+  "address": "1180 Saltmarsh Way, Comox BC (sample)",
+  "parcelId": "000-555-0142 (sample)",
+  "technician": "A. Technician (placeholder -- rendered locally, never sent to the model)",
+
+  "serviceDate": "2026-05-14",
+  "systemName": "Main House",
+  "systemType": "Type 2 (Aerobic Treatment Unit)",
+  "maintenanceIntervalMonths": 12,
+
+  "components": [
+    {
+      "type": "septic_tank",
+      "label": "Primary Tank",
+      "condition": "Good",
+      "specs": { "capacityGallons": 1250, "material": "concrete" }
+    },
+    {
+      "type": "pump",
+      "label": "Effluent Pump",
+      "condition": "Good",
+      "specs": { "nameplateAmps": 7.2, "horsepower": 0.5, "voltage": 115 }
+    },
+    {
+      "type": "dispersal_field",
+      "label": "Dispersal Field",
+      "condition": "Good"
+    }
+  ],
+
+  "findings": {
+    "septic_tank_0_scum_inches": 3.0,
+    "septic_tank_0_sludge_inches": 8.0,
+    "septic_tank_0_total_fluid_depth": 48.0,
+    "septic_tank_0_effluent_filter_condition": "Good",
+    "septic_tank_0_effluent_filter_soiling": "Light",
+    "septic_tank_0_effluent_filter_cleaned": "Yes",
+    "septic_tank_0_liquid_level_relative": "At Outlet",
+    "pump_0_pump_current_draw": 1.6,
+    "pump_0_high_water_alarm": "Functional",
+    "pump_0_electrical_connections": "Sound",
+    "dispersal_field_0_surface_condition": "Dry"
+  },
+
+  "tasksPerformed": [
+    "Cleaned and reseated the effluent filter",
+    "Measured scum, sludge and total fluid depth",
+    "Ran the effluent pump through a full cycle and measured amp draw",
+    "Tested the high water alarm",
+    "Walked the dispersal field and checked for surface breakout"
+  ]
+}
