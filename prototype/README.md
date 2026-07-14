@@ -265,40 +265,45 @@ explicitly log-only and ships the report anyway — see below.)
 
 ## The terminology constraint, and why it is the ethics core
 
-In British Columbia, a Registered Onsite Wastewater Practitioner (ROWP) holds one
-or more specialisations. As SepticScribe's own domain corpus has it, **"Maintenance
-Provider" and "Private Inspector" are distinct registration categories** with
-different scopes of practice. The contractor using this system holds the former.
+In British Columbia, **maintenance** and **inspection** name two different services.
+Maintenance is the ongoing servicing of a system. An *inspection* is an assessment
+of an existing system's performance — the thing that backs a property transaction or
+a compliance verification — delivered to its own standard, with its own deliverables.
+The contractor using this system performs maintenance.
 
-> **Where this claim comes from.** The certification boundary — the premise the
-> ethics argument rests on — is **practitioner knowledge**. I work in this industry,
-> and it comes from doing the work and from conversations with inspectors,
-> maintenance providers, and WACOWMA representatives. It is not a reading of a
-> statute, and I am not presenting it as one: treat it as informed industry
-> practice, **not legal advice**, and confirm the exact ROWP categories against
-> ASTTBC and BC Reg 326/2004 before relying on them for anything consequential.
+> **Where this claim comes from, and it is the strength of this project rather than
+> its weak point.** The boundary is **practitioner knowledge**. I work in this
+> industry; it comes from doing the work and from conversations with inspectors,
+> maintenance providers, and WACOWMA representatives. It is first-hand industry
+> practice, stated as such rather than dressed up as a citation to a regulation it is
+> not. It is **not legal advice**.
 >
-> The **dependent figures** quoted elsewhere in this repo are a different matter (the
-> 22,700 L/day threshold, Type 1/2/3 BOD/TSS limits, filing windows, the $25,000/day
-> penalty). Those come from SepticScribe's own knowledge corpus
-> (`Backend/knowledge/domains/bc-health-authority-regulations.json`), which carries
-> **`"sourceUrl": null`** and a **self-assigned** confidence rating — synthesized
-> content, not citations. Do not repeat them without checking the primary source.
-> That the system's regulatory ground truth is unsourced is one of this project's
-> real findings, and it is a finding about the *pipeline* — not the origin of the
-> rule above.
+> **One thing an earlier draft got wrong, corrected here.** ASTTBC's registration
+> categories are distinct — but since Practice Bulletin **#PPB-2023-OW-001**
+> (15 Feb 2023) a ROWP with the *Maintenance Provider* endorsement **may** conduct
+> private inspections without separately holding the *Private Inspector* endorsement.
+> The earlier draft asserted the pre-2023 position as current. **The rule survives
+> that reversal untouched:** the bulletin changed *who may perform an inspection*; it
+> did not turn a maintenance visit into one.
+>
+> **The numeric regulatory figures in this repo have been checked against primary
+> sources** — see [`../SOURCES.md`](../SOURCES.md) (BC Reg 326/2004; Standard Practice
+> Manual V3; ASTTBC), with URLs and access dates. One failed the check: the
+> **2.0 mg/L dissolved-oxygen "regulatory minimum"** is not in any BC regulation or
+> standard. It is an operational threshold from SepticScribe's own unsourced corpus
+> (`sourceUrl: null`), and the word REGULATORY in that output is a defect — still live
+> in the product, disclosed in CASE-STUDY.md §5.10. **This prototype emits
+> `BELOW OPERATIONAL THRESHOLD` instead** (`src/guardrails.js`), which is what the
+> product should say. That the product's regulatory ground truth is unsourced is one
+> of this project's real findings — a finding about the *pipeline*, not about the
+> origin of the rule above.
 
-The *engineering* argument does not depend on the regulatory detail being exactly
-right, and it is worth separating the two. Whatever the precise scope boundary, the
-contractor and the vendor agree the document must describe **maintenance**; the
-system must therefore be able to hold a terminology rule mechanically. It could not.
-
-Subject to that caveat: "inspection" is not a style preference. It is a term of art
-naming a regulated scope of practice the user does not hold. A report saying *"your
-inspection revealed..."* asserts — under that technician's name and registration
-number — that work was performed under a certification they do not have. The people
-harmed are, in order: the contractor whose registration is exposed, and the
-homeowner or buyer who relies on a document that was never what it appeared to be.
+So "inspection" is not a style preference. It is a term of art naming a different
+service. A report saying *"your inspection revealed..."* asserts — under that
+technician's name and registration number — that a service was performed which was
+not performed, regardless of which endorsements the signer holds. The people harmed
+are, in order: the contractor whose registration is exposed, and the homeowner or
+buyer who relies on a document that was never what it appeared to be.
 
 Three things enforce it here, because any one alone is insufficient:
 
@@ -441,3 +446,13 @@ test/                60 tests
 Every file in `fixtures/replay/` records the model that produced it, when, its
 real token usage and its real latency. None of the model output quoted in this
 README was written by me — including, especially, the bad output.
+
+**One provenance note, because a captured fixture cannot be retro-edited without
+becoming a fake.** All fixtures in `fixtures/replay/` and `fixtures/experiment-raw/`
+were captured on 2026-07-14, *before* the dissolved-oxygen relabel described above
+(`REGULATORY MINIMUM` → `OPERATIONAL THRESHOLD`). Some of them therefore contain
+model prose carrying the old, wrong word — because that is what the model was handed
+at the time. They are left exactly as captured. Re-running would draw a fresh sample
+and destroy the hand-verification the published terminology numbers rest on, and the
+relabel touches one line of MEASUREMENT GUIDELINES and no terminology text. **A
+transcript is evidence; edited to look better, it is nothing.**

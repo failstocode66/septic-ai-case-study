@@ -187,7 +187,7 @@ solids percentage is what books the truck.
     { "class": "A",
       "confidence": "moderate",
       "metric": "do_mgl",
-      "observation": "Dissolved oxygen has declined at every visit: 4.2 -> 3.6 -> 2.9 -> 2.1 mg/L. It is now just above the 2.0 mg/L minimum.",
+      "observation": "Dissolved oxygen has declined at every visit: 4.2 -> 3.6 -> 2.9 -> 2.1 mg/L. It is now just above the 2.0 mg/L operational target.",
       "why_significant": "No single visit shows an alarming drop, which is why this has not been flagged before. The trend is monotonic across four visits and will cross the minimum before the next scheduled visit if it continues. This is the signature of a slowly failing blower.",
       "impact_if_used": null,
       "recommended_action": "Assess the air blower (condition, pressure, amp draw against nameplate) at the next visit, or sooner. Do not wait for DO to cross the threshold -- by then treatment has already been impaired for months.",

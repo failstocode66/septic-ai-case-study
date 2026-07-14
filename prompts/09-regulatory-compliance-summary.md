@@ -1,4 +1,4 @@
-# 09 — Operating-permit / filing summary
+# 09 — Maintenance-record summary for a Health Authority reader
 
 | | |
 |---|---|
@@ -10,11 +10,27 @@
 
 ## 1. Use case
 
-BC Type 2 and Type 3 systems carry **operating permits**. The permit obliges the owner to have the
-system maintained by a R.O.W.P. Maintenance Provider at a fixed interval (typically 6-12 months),
-and to have **maintenance reports filed with the Health Authority**. An Environmental Health Officer
-may pull those records years later, most often because a neighbour complained about an odour or a
-wet patch.
+A BC sewerage system is maintained under a **maintenance plan**, and the obligation runs through that
+plan: **BC Reg 326/2004 s.10(1)** — *"An owner must ensure that a sewerage system on the owner's land
+is maintained in accordance with the maintenance plan"* — and **s.10(2)** requires the owner to
+**keep** records of that maintenance. The **Standard Practice Manual V3 (2014), Table II-62** sets the
+minimum *initial* maintenance and monitoring frequency: **6 months for Type 2 and Type 3 systems,
+12 months for Type 1**, for the first 12–14 months of operation; thereafter the maintenance plan sets
+the frequency (SPM V3's minimum long-term frequency is 2 years for Type 2/3 systems, 5 years for all
+others). Sources and URLs: [`../SOURCES.md`](../SOURCES.md).
+
+> **Two corrections from an earlier draft of this file, because they are exactly the kind of error
+> this prompt exists to prevent.** (1) That draft attributed the 6–12 month interval to an *operating
+> permit*. The interval is real, but it comes from the SPM's maintenance-plan guidance, not from a
+> permit clause. (2) It asserted that **maintenance reports must be "filed with the Health
+> Authority."** **The Sewerage System Regulation imposes no such filing duty** — s.10(2) requires the
+> owner to *keep* records, not file them. (The SSR's one 30-day filing window, s.9(1), attaches to the
+> letter of certification filed after *construction*.) If a particular health authority requires
+> ongoing filing as a permit condition, that is a claim about *that authority* and must be cited to
+> it. It is not in the regulation, and this file no longer says it is.
+
+An Environmental Health Officer may pull those records years later, most often because a neighbour
+complained about an odour or a wet patch.
 
 What the EHO wants is boring and specific: *was the required maintenance performed, when, by whom,
 what did they find, and what did they do about it.*
@@ -67,8 +83,9 @@ the risk explicitly by choosing the technical tone.
 ### System
 
 ```text
-You are preparing a MAINTENANCE FILING SUMMARY for an onsite wastewater system in British Columbia,
-to accompany a maintenance record submitted to the Health Authority under an operating permit.
+You are preparing a MAINTENANCE RECORD SUMMARY for an onsite wastewater system in British Columbia.
+It is a record of maintenance performed under the system's maintenance plan. The owner is required to
+keep it, and a Health Authority may request or review it.
 
 WHAT THIS DOCUMENT IS:
 A factual record of maintenance performed -- date, practitioner, work performed, conditions
@@ -79,8 +96,9 @@ WHAT THIS DOCUMENT IS NOT (absolute):
   "is in compliance", "meets regulatory requirements", "passes", "is approved", or "is certified".
   Whether a system complies is a determination made by the Health Authority, not by a maintenance
   provider and not by you.
-- It is NOT an inspection. The work was MAINTENANCE, performed under a ROWP Maintenance Provider
-  certification. "Inspection" is a separate certified scope of practice (ROWP Private Inspector).
+- It is NOT an inspection. The work was MAINTENANCE. An inspection is a separate service -- an
+  assessment of an existing system's performance, delivered to its own standard, and the thing that
+  backs a property transaction or a compliance verification. This visit was not that.
   Never use the words inspection / inspected / inspector to describe this visit, this work, this
   technician, or this document. ("Inspection port" -- a hardware component -- is permitted.)
 - It is NOT a certification. Do not generate a certification block, a practitioner registration
@@ -112,19 +130,21 @@ Output the JSON schema below. Facts only. No narrative flourish.
 
 ```text
 VERIFIED REFERENCE DATA:
-[REGULATORY STANDARDS]
-- Aerobic treatment minimum dissolved oxygen: 2.0 mg/L (source: <corpus reference>)
-- Tank solids pumping threshold: 1/3 of working depth (source: <corpus reference>)
+[REFERENCE STANDARDS -- each carries its own source; not all of them are regulatory]
+- Aerobic treatment operational target, dissolved oxygen: 2.0 mg/L
+  (source: product reference corpus -- OPERATIONAL, not a regulatory limit; no BC regulation sets one)
+- Tank solids pump-out trigger: solids exceeding 1/3 of the tank's internal height
+  (source: BC Sewerage System Standard Practice Manual V3 (2014) -- one of six OR-conditions)
 
 PRE-COMPUTED MEASUREMENT CLASSIFICATIONS (use these directly -- do NOT recompute):
-- DISSOLVED OXYGEN: 1.4 mg/L -> BELOW REGULATORY MINIMUM -- treatment impaired
+- DISSOLVED OXYGEN: 1.4 mg/L -> BELOW OPERATIONAL THRESHOLD -- treatment impaired
 - SOLIDS: 10.5" combined (3.0" scum + 7.5" sludge) / 40" fluid depth = 26.3% -> APPROACHING THRESHOLD -- monitor closely
 
 MAINTENANCE RECORD:
   property_ref: P-1042
   address: "760 Saltmarsh Way (sample), Comox BC"  # invented street, real town
   system_type: Type_2_Advanced
-  operating_permit_interval_months: 12
+  maintenance_plan_interval_months: 12
   service_date: "2026-06-13"
   previous_approved_service_date: "2025-06-02"
   practitioner_endorsement: "Maintenance Provider"
@@ -134,7 +154,7 @@ MAINTENANCE RECORD:
     - "Treatment unit dissolved oxygen measured"
     - "Blower serviced -- air filter cleaned"
   deficiencies:
-    - "Dissolved oxygen below 2.0 mg/L minimum"
+    - "Dissolved oxygen below the 2.0 mg/L operational target"
     - "Effluent clarity: cloudy"
     - "Air blower condition: Fair"
   not_measured:
@@ -152,8 +172,8 @@ MAINTENANCE RECORD:
     "service_date": "2026-06-13",
     "previous_approved_service_date": "2025-06-02",
     "days_since_previous_service": 376,
-    "permit_interval_months": 12,
-    "interval_observation": "376 days elapsed since the previous approved maintenance visit. The operating permit interval on record is 12 months. This is a factual statement of elapsed time; it is not a compliance determination.",
+    "maintenance_plan_interval_months": 12,
+    "interval_observation": "376 days elapsed since the previous approved maintenance visit. The maintenance-plan interval on record is 12 months. This is a factual statement of elapsed time; it is not a compliance determination.",
     "practitioner_scope": "Maintenance Provider",
     "work_performed": [
       "Effluent filter removed, cleaned, and reinstalled",
@@ -164,13 +184,13 @@ MAINTENANCE RECORD:
     "measurements": [
       { "parameter": "Dissolved oxygen",
         "value": "1.4 mg/L",
-        "reference_threshold": "2.0 mg/L minimum",
-        "threshold_source": "VERIFIED REFERENCE DATA",
-        "classification": "BELOW REGULATORY MINIMUM -- treatment impaired" },
+        "reference_threshold": "2.0 mg/L operational target (not a regulatory limit)",
+        "threshold_source": "product reference corpus",
+        "classification": "BELOW OPERATIONAL THRESHOLD -- treatment impaired" },
       { "parameter": "Tank solids",
         "value": "26.3% of fluid depth",
-        "reference_threshold": "1/3 of working depth",
-        "threshold_source": "VERIFIED REFERENCE DATA",
+        "reference_threshold": "1/3 of the tank's internal height",
+        "threshold_source": "BC SPM V3 (2014)",
         "classification": "APPROACHING THRESHOLD -- monitor closely" },
       { "parameter": "Effluent BOD",
         "value": "not measured during this visit",
@@ -179,7 +199,7 @@ MAINTENANCE RECORD:
         "classification": null }
     ],
     "deficiencies_identified": [
-      "Dissolved oxygen measured 1.4 mg/L, below the 2.0 mg/L minimum in the reference data provided.",
+      "Dissolved oxygen measured 1.4 mg/L, below the 2.0 mg/L operational target in the reference data provided.",
       "Effluent clarity recorded as cloudy.",
       "Air blower condition recorded as Fair."
     ],
@@ -248,8 +268,17 @@ is labelled VERIFIED in the prompt. And nothing in it points at BC Laws, ASTTBC,
 Practice Manual.
 
 Every regulatory fact this prompt would ground itself on — the 2.0 mg/L DO minimum, the 1/3 rule,
-the Type 2/3 BOD/TSS limits, the R.O.W.P. category boundaries that the entire ethics argument in
-prompt 05 rests on — traces back to a corpus of unsourced text.
+the Type 2/3 BOD/TSS limits — traces back to a corpus of unsourced text. (The R.O.W.P. scope boundary
+that the ethics argument in prompt 05 rests on does **not**: that is the author's own practitioner
+knowledge, and prompt 05 says so. The two were run together in an earlier draft, and separating them
+matters — one is a finding about the pipeline, the other is a claim the author stands behind.)
+
+Checking them by hand against the primary sources — which is what this project eventually did, see
+[`../SOURCES.md`](../SOURCES.md) — is instructive, because the corpus turns out to be **mostly right
+and confidently wrong in one place**. That is the worst possible distribution: right often enough to
+be trusted, wrong exactly where nobody looked. The DO "regulatory minimum" is not a regulation. It
+was never a regulation. And it has been printed, in a report a regulator may read, next to figures
+that *are*.
 
 This is not a hypothetical risk. It is the **exact failure the whole system is built to prevent**,
 displaced one layer down:
@@ -262,11 +291,20 @@ a provenance chain.
 
 **What honesty requires here:**
 
-1. **Before publication**, every regulatory claim in this case study must be re-verified against
-   primary sources (BC Laws for the Sewerage System Regulation; ASTTBC for R.O.W.P. scopes of
-   practice; the SPM V3 itself for technical thresholds). Publishing a regulatory claim sourced from
-   an unsourced RAG corpus, *inside a case study about not trusting LLMs near regulatory documents*,
-   would be self-refuting.
+1. **Done, before publication: every regulatory claim in this case study was re-verified against
+   primary sources** — BC Laws for the Sewerage System Regulation, ASTTBC for R.O.W.P. registration
+   categories, and the SPM V3 itself for technical thresholds. The register is
+   [`../SOURCES.md`](../SOURCES.md), with URLs and access dates. Publishing a regulatory claim sourced
+   from an unsourced RAG corpus, *inside a case study about not trusting LLMs near regulatory
+   documents*, would have been self-refuting. **What that check found:** the Type 1/2/3 definitions and
+   the 45/10 mg/L BOD/TSS limits are exactly right (BC Reg 326/2004 s.1); the 1/3 pump-out trigger is
+   real and quotable from SPM V3 (though its denominator is the tank's *internal height*, not "working
+   depth", and it is one of six OR-conditions); the 6/12-month intervals are real but come from SPM V3
+   Table II-62, not from an operating permit; there is **no duty to file maintenance reports with the
+   health authority** in the SSR at all; and **the 2.0 mg/L dissolved-oxygen "regulatory minimum" does
+   not exist** — no BC regulation or standard sets a DO threshold. That last one is still emitted by
+   production as `BELOW REGULATORY MINIMUM`, and it is now carried as an open defect (CASE-STUDY.md
+   §5.10) rather than a caveat.
 2. **Before the feature ships**, every chunk in the `regulatory` domain needs a real `sourceUrl` and
    an "unsourced" chunk must be **excluded from retrieval** for this prompt specifically. A
    citation-bearing prompt may only be grounded in citable chunks. That is a two-line filter and it

@@ -98,29 +98,43 @@ reported, not hidden, and it is a better finding than the privacy boast would ha
 
 ## Terminology note (read before anything else)
 
-In BC, **"maintenance" and "inspection" name two different regulated scopes of practice.** A
-Registered Onsite Wastewater Practitioner (R.O.W.P.) holding the *Maintenance Provider* endorsement
-is not thereby authorized to practise as a *Private Inspector*. Describing maintenance work as an
-"inspection" in a document signed under a practitioner's registration misrepresents the service, and
-a homeowner, buyer, or lender may rely on it as something it is not.
+In BC, **"maintenance" and "inspection" name two different services.** Maintenance is the ongoing
+servicing of a system. An *inspection* is an assessment of an existing system's performance — the
+thing that backs a property transaction or a compliance verification — and it is a distinct service
+with its own scope, standards, and deliverables. Describing maintenance work as an "inspection" in a
+document signed under a practitioner's registration misdescribes the work performed and the standard
+it was performed to, and a homeowner, buyer, or lender may rely on it as something it is not.
 
-> ⚠️ **Sourcing caveat — this is the load-bearing regulatory claim in the project, and it is not
-> primary-sourced.** The Maintenance Provider / Private Inspector distinction above traces to
-> SepticScribe's own domain corpus (`Backend/knowledge/domains/bc-health-authority-regulations.json`),
-> which carries **`"sourceUrl": null`** and a **self-assigned** confidence rating — i.e. it is
-> synthesized, LLM-authored content, not a citation. It has not been checked against ASTTBC's
-> published ROWP scopes of practice, BC Reg 326/2004, or the Standard Practice Manual, and neither
-> have the other regulatory figures quoted in this library (the 22,700 L/day threshold, Type 1/2/3
-> BOD/TSS limits, the 6–12 month maintenance interval, the 30-day filing window, the $25,000/day
-> penalty — see prompt 09). **None of it is legal advice, and none of it should be repeated without
-> checking the primary source.** Verifying these against ASTTBC and BC Laws is a prerequisite to
-> publishing this anywhere as guidance for practitioners.
+> **Where this rule comes from — stated plainly, because it carries the project.** It is
+> **practitioner knowledge**. The author works in this industry; the rule comes from doing the work
+> and from conversations with inspectors, maintenance providers, and WACOWMA representatives. It is
+> first-hand industry practice, and it is labelled as such rather than dressed up as a citation to a
+> regulation it is not. Treat it as informed industry practice, **not legal advice**.
 >
-> That the corpus is unsourced is itself one of this project's findings, and the irony is the point:
-> a case study about not trusting a language model near a regulatory document should not rest its own
-> central claim on an unsourced, LLM-written corpus. **The engineering argument does not depend on
-> the regulatory detail being exactly right** — whatever the precise scope boundary, the document must
-> describe *maintenance*, and the system must be able to hold that rule mechanically. It could not.
+> **One documented fact that is easy to get wrong, and that an earlier draft of this library got
+> wrong.** ASTTBC's registration categories (Planner, Installer, Maintenance Provider, Private
+> Inspector) *are* distinct, each with its own scope — but since **Practice Bulletin
+> #PPB-2023-OW-001 (15 Feb 2023)** a ROWP holding the Maintenance Provider endorsement **may**
+> conduct private inspections without separately holding the Private Inspector endorsement. Before
+> that bulletin, the PI endorsement was required (ROWP Practice Guidelines, 2017, §7.1). The earlier
+> draft asserted the pre-2023 position as current. That has been corrected here and in prompt 05.
+>
+> **The rule is unaffected by that reversal**, and this is the point: the bulletin changed *who may
+> perform an inspection*. It did not turn a maintenance visit into one. Calling a maintenance visit
+> an inspection still misdescribes the service rendered — regardless of which endorsements the signer
+> holds — and the false-reliance harm is identical.
+>
+> **The numeric figures in this library have been checked against primary sources** and are cited in
+> [`../SOURCES.md`](../SOURCES.md): the Type 1/2/3 definitions and the 45 / 10 mg/L BOD/TSS limits
+> (BC Reg 326/2004 s.1); the 1/3-of-internal-height pump-out trigger and the 6/12-month initial
+> maintenance intervals (Standard Practice Manual V3, 2014). **One figure is not regulatory despite
+> being labelled so in the product's own output**: the **2.0 mg/L dissolved-oxygen "regulatory
+> minimum"** has no basis in BC Reg 326/2004 or SPM V3 — it is an operational threshold from
+> SepticScribe's own unsourced corpus, and the word REGULATORY in that output is a defect. See
+> [`../SOURCES.md`](../SOURCES.md) and prompt 09 §6.
+>
+> That the product's regulatory ground truth is unsourced remains one of this project's real
+> findings — but it is a finding about the *pipeline*, not the origin of the rule above.
 
 Throughout this library, the work is **maintenance**. The only places the word "inspection" appears
 are (a) verbatim quotations of the production system's prompt text **as it stood when this audit was

@@ -98,7 +98,7 @@ output** — no "(CONFIRMED)" tags. They surface as *verb choice*:
 The scum layer measured 3.0 inches and sludge 7.5 inches against a total fluid depth of 40 inches.
 [CONFIRMED -- flat declarative, a measured value]
 
-Dissolved oxygen measured 1.4 mg/L, below the 2.0 mg/L minimum, and effluent clarity was recorded
+Dissolved oxygen measured 1.4 mg/L, below the 2.0 mg/L operational target, and effluent clarity was recorded
 as cloudy. Together these indicate degraded biological treatment, most probably reduced aeration.
 [INDICATED -- "indicate", "most probably"; two correlated readings, one inference]
 

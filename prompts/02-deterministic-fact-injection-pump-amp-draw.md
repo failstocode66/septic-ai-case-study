@@ -123,6 +123,15 @@ verified by deterministic calculation. Use these values directly in the report. 
 percentages, thresholds, or classifications.
 ```
 
+> ⚠️ **`BELOW REGULATORY MINIMUM` is wrong, and it is reproduced verbatim here because it is what the
+> system actually emits.** No BC regulation or standard sets a dissolved-oxygen minimum — not BC Reg
+> 326/2004, not SPM V3 (both checked by full-text extraction; see [`../SOURCES.md`](../SOURCES.md)).
+> The 2.0 mg/L figure is an *operational* threshold from the product's own unsourced corpus. The word
+> REGULATORY is an affirmative claim the system cannot support, in text that reaches a document a
+> health authority may read. It is an open defect (CASE-STUDY.md §5.10); the correct string is
+> `BELOW OPERATIONAL THRESHOLD -- treatment impaired`, which is what the prototype in this repo emits.
+> The transcript is not rewritten to hide it.
+
 And when only *some* of the tank measurements exist:
 
 ```text
@@ -234,7 +243,9 @@ if (hasTankMeasurements(findings) && numericalClassifications === '') {
 
 The injected block used to end: *"computed server-side from manufacturer nameplate data and
 industry-standard thresholds (**NEC 430, DOE motor efficiency standards**)."* That attribution was
-wrong twice over, and it was reaching real customer reports:
+wrong twice over, and it was in the shipped prompt — in the block the model is told is AUTHORITATIVE,
+and so in every report the system produced (the product is pre-beta, so no customer received one; that
+is timing, not absolution):
 
 1. **NEC 430.32 governs the sizing of motor overload protection.** It does not define a seven-tier
    diagnostic scale, and it certainly does not say "0-30% FLA = no load" or "80-90% = optimal for a

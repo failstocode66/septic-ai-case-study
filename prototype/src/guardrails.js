@@ -236,8 +236,14 @@ export function computeNumericalClassifications({ findings = {} }) {
   const dox = parseFloat(getFinding(findings, 'dissolved_oxygen_mgl'));
   if (!Number.isNaN(dox)) {
     const status =
-      dox >= THRESHOLDS.dissolvedOxygen.minimum ? `MEETS REGULATORY MINIMUM (>=${THRESHOLDS.dissolvedOxygen.minimum} mg/L)`
-      : dox >= THRESHOLDS.dissolvedOxygen.critical ? 'BELOW REGULATORY MINIMUM -- treatment impaired'
+      // PROVENANCE: 2.0 mg/L is an OPERATIONAL threshold, not a regulatory one. No BC instrument
+      // sets a dissolved-oxygen minimum -- not BC Reg 326/2004, not the Standard Practice Manual V3
+      // (both checked by full-text extraction; see ../../SOURCES.md). Production SepticScribe still
+      // emits "BELOW REGULATORY MINIMUM" here, which is an affirmative regulatory claim it cannot
+      // support, in text that reaches a report a health authority may read. That is an open defect
+      // (CASE-STUDY.md 5.10). This prototype emits the honest label instead.
+      dox >= THRESHOLDS.dissolvedOxygen.minimum ? `MEETS OPERATIONAL TARGET (>=${THRESHOLDS.dissolvedOxygen.minimum} mg/L)`
+      : dox >= THRESHOLDS.dissolvedOxygen.critical ? 'BELOW OPERATIONAL THRESHOLD -- treatment impaired'
       : 'CRITICAL -- anaerobic conditions, treatment failure likely';
     if (dox < THRESHOLDS.dissolvedOxygen.critical) severities.push('CRITICAL');
     out.push(`DISSOLVED OXYGEN: ${dox} mg/L -- ${status}`);

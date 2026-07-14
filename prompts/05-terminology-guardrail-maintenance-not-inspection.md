@@ -11,34 +11,60 @@
 ## 1. Use case — and why this is not a style preference
 
 In British Columbia, onsite wastewater systems are governed by the **Sewerage System Regulation**
-under the Public Health Act, and only an **Authorized Person** may file records. For a
-non-engineer, that means a **Registered Onsite Wastewater Practitioner (R.O.W.P.)**, registered
+(BC Reg 326/2004) under the *Public Health Act*, and only an **Authorized Person** may file records.
+For a non-engineer, that means a **Registered Onsite Wastewater Practitioner (R.O.W.P.)**, registered
 through ASTTBC — and R.O.W.P. registration is **divided into separate specialization categories with
 distinct scopes of practice**, each with its own supervised-experience requirement and its own
-registration. Two of them matter here:
+registration ([ASTTBC](https://asttbc.org/applicants/rowps/), accessed 2026-07-14). Two of them
+matter here:
 
 | Endorsement | Scope |
 |---|---|
 | **Maintenance Provider** | Ongoing system maintenance, monitoring, and reporting. **This is the SepticScribe user.** |
 | **Private Inspector** | Assessment of existing systems for **property transactions and compliance verification**. |
 
-A practitioner holding the Maintenance Provider endorsement is **not** thereby authorized to
-practise as a Private Inspector.
+These are distinct endorsements with distinct scopes of practice.
+
+> **A correction, and it matters — an earlier draft of this file got this wrong.** Since ASTTBC
+> Professional Practice Bulletin **#PPB-2023-OW-001** (15 Feb 2023), a ROWP holding the *Maintenance
+> Provider* endorsement **is** permitted to conduct private inspections without separately holding
+> the *Private Inspector* endorsement, provided they are competent to do so —
+> [ASTTBC removed that barrier](https://asttbc.org/wp-content/uploads/2023/02/ROWP-Bulletin-FAQ-Final-February-15-2023.pdf)
+> (accessed 2026-07-14). Before that bulletin, the PI endorsement *was* required (ROWP Practice
+> Guidelines, OWCB Policy, 26 Jan 2017, §7.1). The earlier draft asserted the 2017 position as
+> current. It was stale policy, and stale policy stated confidently is exactly what this project is
+> about.
+>
+> **The rule this prompt enforces is unaffected**, and the reason is worth being precise about. The
+> bulletin changed *who may perform an inspection*. It did not turn a maintenance visit into one.
 
 So "inspection" is not a more official-sounding synonym for "maintenance". **It is a term of art
-naming a regulated scope of practice that the person signing the document does not hold.**
+naming a different service** — an assessment of an existing system's performance, with its own scope,
+its own minimum standards, and its own deliverables (ROWP Practice Guidelines §7.2). A maintenance
+visit is not that, and a report that calls it that misdescribes both the work performed and the
+standard it was performed to — **regardless of which endorsements the person signing happens to
+hold.**
+
+**Where this rule comes from.** It is **practitioner knowledge**: the author works in this industry,
+and the rule comes from doing the work and from conversations with inspectors, maintenance providers,
+and WACOWMA representatives. It is stated as informed industry practice, not as a reading of a
+statute, and it is **not legal advice**. Sources for every regulatory figure used in this library are
+in [`../SOURCES.md`](../SOURCES.md).
 
 ### What actually goes wrong
 
 A generated report that says *"Your inspection revealed elevated scum levels"* is not a wording
 infelicity. It is a document, carrying a technician's name and R.O.W.P. number, asserting that a
-regulated act was performed under a certification they do not have.
+service was performed which was not performed.
 
-1. **It misrepresents an uncertified service** — a misrepresentation by the practitioner, of the
-   practitioner's own scope of practice, in their own name.
+1. **It misdescribes the service rendered.** An inspection is an assessment of an existing system's
+   performance, delivered to its own standard. A maintenance visit is servicing. Saying one and
+   doing the other is a false statement about the work, in the practitioner's own name.
 2. **It exposes the practitioner's registration.** Registration can be suspended or revoked for
-   Code of Ethics violations. The first person harmed by this bug is the paying customer.
-3. **It creates false reliance — this is the real harm vector.** A Private Inspector's *inspection*
+   Code of Ethics violations, and misrepresenting the service rendered is squarely that. (SepticScribe
+   is pre-beta with no customers, so nobody has been harmed by this — the point is that it would have
+   been the practitioner, and then their customer, and never the vendor.)
+3. **It creates false reliance — this is the real harm vector.** An *inspection*
    is what backs **property transactions**. A homeowner, a buyer, or a lender reading "your
    inspection revealed…" may reasonably rely on the document as a real-estate or compliance
    inspection. It is not one, and it never claimed not to be. Someone buys a house on the strength
@@ -424,15 +450,20 @@ cleanly (*"a qualified technician must **examine** the pump impeller… and **as
 necessary"*), so the reports do not read worse. But a guardrail must be reported for what it does, not
 what it was meant to do.
 
-**Where the rule comes from, stated because this document is public:** the
-Maintenance-Provider / Private-Inspector boundary in §1 is **practitioner knowledge** — the author
-works in this industry, and it comes from doing the work and from conversations with inspectors,
-maintenance providers, and WACOWMA representatives. It is informed industry practice, **not legal
-advice**, and not a reading of a statute; confirm the exact R.O.W.P. categories against ASTTBC before
-relying on them for anything consequential.
+**Where the rule comes from, stated because this document is public:** the maintenance / inspection
+boundary in §1 is **practitioner knowledge** — the author works in this industry, and it comes from
+doing the work and from conversations with inspectors, maintenance providers, and WACOWMA
+representatives. It is informed industry practice, **not legal advice**, and not a reading of a
+statute. The ASTTBC registration categories, and the 2023 bulletin that removed the endorsement
+barrier for private inspections, are cited in [`../SOURCES.md`](../SOURCES.md) with URLs and access
+dates.
 
-The *numeric* regulatory figures the system treats as authoritative are a separate matter: those come
+The *numeric* regulatory figures the system treats as authoritative are a separate matter. Those come
 from its own knowledge base (`Backend/knowledge/domains/bc-health-authority-regulations.json`), which
 carries `"sourceUrl": null` and a self-assigned confidence rating. **That is synthesized content, not
 a citation** — and a RAG corpus without provenance, inside a system that tells the model to treat it
-as ground truth, is one of the real findings of this project.
+as ground truth, is one of the real findings of this project. Every such figure used *in this prompt
+library* has now been checked against BC Reg 326/2004 and SPM V3 and is cited in
+[`../SOURCES.md`](../SOURCES.md); the one that failed that check — the *"2.0 mg/L regulatory
+minimum"* for dissolved oxygen — is documented there as an open product defect rather than quietly
+corrected.

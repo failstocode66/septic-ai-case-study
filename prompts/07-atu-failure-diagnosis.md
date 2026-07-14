@@ -11,8 +11,25 @@
 
 An **Aerobic Treatment Unit** (ATU) is what makes a Type 2 system a Type 2 system: it blows air
 through the effluent so that aerobic bacteria digest the organics before the water reaches the
-dispersal field. Under BC's technical standard it must hold effluent quality below 45 mg/L
-BOD/TSS, and a healthy unit runs at **≥ 2.0 mg/L dissolved oxygen**.
+dispersal field. Under the **Sewerage System Regulation (BC Reg 326/2004, s.1)**, a *Type 2 treatment
+method* is one that produces effluent **consistently below 45 mg/L total suspended solids and below
+45 mg/L 5-day biochemical oxygen demand** — that limit is the regulation's own definition of the
+type, not a separate technical standard
+([BC Laws](https://www.bclaws.gov.bc.ca/civix/document/id/complete/statreg/326_2004), accessed
+2026-07-14).
+
+A healthy unit runs at **≥ 2.0 mg/L dissolved oxygen**. That figure is an **operational threshold,
+not a regulatory one** — see the box below, because the product gets this wrong and the error is
+instructive.
+
+> ⚠️ **The 2.0 mg/L DO threshold is not in any regulation.** Neither BC Reg 326/2004 nor the Standard
+> Practice Manual V3 sets a dissolved-oxygen minimum of any kind (checked by full-text extraction of
+> both — see [`../SOURCES.md`](../SOURCES.md)). The figure comes from SepticScribe's own reference
+> corpus, the one with `sourceUrl: null`. It is probably sound operations — an aerated unit does need
+> aerobic conditions — but SepticScribe emits it as **`BELOW REGULATORY MINIMUM`**, and *regulatory*
+> is an affirmative claim the system cannot support, in a document an Environmental Health Officer may
+> read. **That string is a live defect** (CASE-STUDY.md §5.10), and this file treats 2.0 mg/L as what
+> it actually is: an operational target for aerobic function.
 
 The characteristic failure is a **cascade**, and every stage of it looks like a separate problem:
 
@@ -114,7 +131,8 @@ Before you attribute any drainfield problem to field age, soil, or hydraulic ove
 first rule out upstream treatment failure. Work the chain in this order:
 
 1. AERATION      -- blower condition, run time, air pressure, amp draw vs nameplate
-2. TREATMENT     -- dissolved oxygen (>= 2.0 mg/L is the minimum for aerobic function)
+2. TREATMENT     -- dissolved oxygen (>= 2.0 mg/L is the operational target for aerobic function;
+                    this is an operational threshold, NOT a regulatory limit)
 3. EFFLUENT      -- clarity, solids carryover, filter soiling
 4. DISPERSAL     -- surface ponding, breakout, saturated ground, field condition
 
@@ -194,7 +212,7 @@ Markdown, inside the Findings and Recommendations sections of the main report:
 ## SERVICE FINDINGS
 
 **Root cause -- aeration failure.** The air blower is in Fair condition and delivering 1.8 psi.
-Dissolved oxygen in the treatment unit measured 1.4 mg/L, below the 2.0 mg/L minimum required for
+Dissolved oxygen in the treatment unit measured 1.4 mg/L, below the 2.0 mg/L operational target for
 aerobic biological treatment, and effluent leaving the unit was cloudy. These three findings form a
 single chain: reduced aeration has suppressed the aerobic bacteria, and the unit is no longer
 treating to specification.
@@ -241,11 +259,14 @@ promise the field will recover, and it does not name a dollar figure.
   degradation (`:359-364`), filter/solids reinforcement (`:376-378`), drainfield-downstream-of-
   treatment (`:383-385`). Injected header at `:389`.
 - The design comment — `:344-346`.
-- The DO threshold (≥2.0 mg/L) and its regulatory framing appear in `computeNumericalClassifications`
-  (`:322-324`) and in the system prompt's MEASUREMENT GUIDELINES.
+- The DO threshold (≥2.0 mg/L) and its **incorrect** regulatory framing appear in
+  `computeNumericalClassifications` (`:322-324`) and in the system prompt's MEASUREMENT GUIDELINES.
 - DIAGNOSTIC REASONING (upstream/downstream tracing) — `:634-639`, already in production.
 - **Newly designed here:** the four-stage protocol, the forced differential, the DO-refusal
   constraint, and the cost-asymmetry framing. None of these exist in production today.
-- **Caveat:** the 2.0 mg/L DO minimum and the Type 2 BOD/TSS limits are taken from the system's own
-  knowledge corpus, which is unsourced (`"sourceUrl": null`). Re-verify against the BC Standard
-  Practice Manual before publication.
+- **Sourcing — checked, and it split.** The Type 2 BOD/TSS limits are real and primary-sourced:
+  **BC Reg 326/2004 s.1** defines a *Type 2 treatment method* as one producing effluent consistently
+  below 45 mg/L TSS and below 45 mg/L BOD5. The **2.0 mg/L DO minimum is not**: neither BC Reg
+  326/2004 nor SPM V3 sets a dissolved-oxygen threshold of any kind. It comes from the product's own
+  unsourced corpus, and production labels it `BELOW REGULATORY MINIMUM`, which is a false regulatory
+  claim. Open defect; see [`../SOURCES.md`](../SOURCES.md) and CASE-STUDY.md §5.10.

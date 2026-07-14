@@ -105,11 +105,16 @@ all of them from the model's reach, render them from verified data, and let the 
 
 Now the part we did not expect to be writing.
 
-In British Columbia, **maintenance** and **inspection** are not synonyms. They are different,
-separately-registered scopes of practice. The practitioners who use SepticScribe hold the maintenance
-endorsement. An *inspection* — the kind that backs a property sale or a compliance verification — is a
-different certification, and describing a maintenance visit as an inspection asserts a qualification
-the technician does not hold, above their own registration number.
+In British Columbia, **maintenance** and **inspection** are not synonyms. They are different
+services. Maintenance is the ongoing servicing of the system. An *inspection* — the kind that backs a
+property sale or a compliance verification — is an assessment of an existing system's performance,
+delivered to its own standard, with its own deliverables. Describing a maintenance visit as an
+inspection asserts a service that was not rendered, above the technician's own registration number.
+
+(That rule is not something we read in a statute. It is practitioner knowledge: one of us works in
+this industry, and it comes from doing the work and from conversations with inspectors, maintenance
+providers, and WACOWMA representatives. We say so rather than dressing it up as a citation — and the
+regulatory figures elsewhere in the project *are* cited, to primary sources, with access dates.)
 
 The harm is not abstract, and it does not land on us. A homeowner — or a buyer, or a lender — who
 reads *"your inspection revealed…"* may reasonably rely on that document as an inspection report. It

@@ -42,6 +42,16 @@ same mistake this document is about** — so the fix shipped first.
 The claims in §6.2 are not just traced through the source; they were **measured**, with real model
 outputs, and every one of those outputs is committed to this repository (§3.7).
 
+**Every regulatory figure used here was checked against the primary source before publication** —
+BC Reg 326/2004 and the Standard Practice Manual V3 were read, not summarized. The register, with
+URLs and access dates, is [`SOURCES.md`](SOURCES.md). One figure failed that check and is **still live
+in the product**: the system labels a dissolved-oxygen reading below 2.0 mg/L as `BELOW REGULATORY
+MINIMUM`, and **no BC regulation sets a dissolved-oxygen minimum at all** (§5.10). It is reported as
+an open defect rather than quietly corrected, and the transcripts that contain it are left verbatim.
+The domain rule at the centre of this document — that maintenance is not inspection — is **the
+author's own practitioner knowledge**, from working in this trade and talking to the people in it, and
+it is labelled as that rather than dressed up as a citation (§2.3).
+
 **No customer data appears anywhere in this document.** Every worked example runs on a synthetic
 record. No property, person, business, or credential number in this document is real.
 
@@ -160,35 +170,48 @@ the narrator.
 There is one domain rule that outranks all engineering considerations, and it is worth stating early
 because it recurs in every section below.
 
-In BC, an **inspection** of an onsite wastewater system is a distinct, separately-certified scope of
-practice from **maintenance**. A practitioner registered to perform maintenance is not thereby
-authorized to perform inspections; inspection is the certification that backs property transactions
-and compliance verification. The two are different registrations with different requirements.
+In BC, an **inspection** of an onsite wastewater system is a different service from **maintenance**.
+Maintenance is the ongoing servicing of the system. An inspection is an assessment of an existing
+system's performance — the thing that backs a property transaction or a compliance verification — and
+it is delivered to its own standard, with its own scope and its own deliverables. A maintenance visit
+is not an inspection, and a report that calls it one misdescribes both the work performed and the
+standard it was performed to.
 
 > **Sourcing, stated up front because this claim carries the whole argument.** The
 > maintenance/inspection boundary above does not come from the system's knowledge corpus, and it is
 > not my reading of a statute. It comes from working in this industry — from doing the work, and from
 > conversations with inspectors, maintenance providers, and WACOWMA representatives. I am stating it
 > as a practitioner, and I am labelling it as **practitioner knowledge** rather than dressing it up as
-> a citation, because those are two different things and only one of them would be honest here.
+> a citation, because those are two different things and only one of them would be honest here. Treat
+> it as informed industry practice. **Nothing here is legal advice.**
 >
-> What that means for you as a reader: treat it as informed industry practice, not as legal advice.
-> **Nothing here is legal advice.** If you need the exact certification categories for a consequential
-> decision, confirm them against ASTTBC and BC Reg 326/2004 — as you would with any practitioner's
-> account of their own trade.
+> **One thing I got wrong in an earlier draft, and it is worth the paragraph.** That draft said a
+> practitioner holding the *Maintenance Provider* endorsement "is not thereby authorized to perform
+> inspections." That was true — under the 2017 ROWP Practice Guidelines (§7.1). **ASTTBC reversed it
+> on 15 February 2023** (Practice Bulletin #PPB-2023-OW-001): a Maintenance Provider may now conduct
+> private inspections *without* separately holding the Private Inspector endorsement. I was asserting
+> stale policy, confidently, in the section of a document about not asserting things confidently. The
+> registration categories are still distinct, with distinct scopes (ASTTBC) — but the *authorization*
+> claim was out of date, and it is corrected here and in `prompts/05`.
 >
-> Separately, and this is a *finding* rather than a caveat: the system's own regulatory ground truth
+> **The rule itself is untouched by that, and the reason is the point.** The bulletin changed *who may
+> perform an inspection*. It did not turn a maintenance visit into one. Whoever signs it, a report
+> that describes a maintenance visit as an inspection describes a service that was not rendered — and
+> the harm vector, false reliance by a homeowner or buyer or lender, is identical.
+>
+> **Every numeric regulatory figure in this repository has been checked against primary sources**, and
+> the register — source, section, URL, access date — is in [`SOURCES.md`](SOURCES.md). The Type 1/2/3
+> definitions and the 45 / 10 mg/L BOD/TSS limits are exactly right (BC Reg 326/2004, s.1); the
+> 1/3 pump-out trigger is real and quotable from the Standard Practice Manual V3. **One figure failed
+> the check** — the *"2.0 mg/L regulatory minimum"* for dissolved oxygen, which no BC regulation or
+> standard sets (§5.10).
+>
+> And this is a *finding* rather than a caveat: the system's own regulatory ground truth
 > (`Backend/knowledge/domains/bc-health-authority-regulations.json`) carries **`sourceUrl: null`** and
 > a **self-assigned** confidence rating. The numeric thresholds it feeds the model cite nothing
-> (§4.3, §5.9) — the ground truth for a document a regulator reads has no provenance. That is a real
-> defect in the pipeline. It is not, however, the basis for the rule above, and the earlier version of
-> this document was wrong to imply it was.
->
-> The *engineering* argument does not depend on the regulatory detail being exactly right. Whatever
-> the precise scope boundary, the vendor and the contractor agree the document must describe
-> **maintenance** — and the system must therefore be able to hold that rule mechanically. It could
-> not. That is the finding, and it survives regardless of how the certification categories are
-> worded.
+> (§4.3, §5.9, §5.10) — the ground truth for a document a regulator reads has no provenance. That is a
+> real defect in the pipeline. It is not the basis for the rule above, and an earlier version of this
+> document was wrong to imply it was.
 
 Therefore: **the system must describe the work as maintenance, and must never describe it as an
 inspection.** A generated report that says *"your inspection revealed…"* asserts, in the
@@ -203,14 +226,15 @@ with it. Left alone, a language model will upgrade the claim. Section 6 shows th
 demonstrably still can.
 
 > **Sourcing note.** Distinguish two things that the first draft of this document ran together. The
-> **certification boundary** (§2.3 above) is practitioner knowledge — mine, from working in the trade.
-> The **numeric regulatory figures** the *system* relies on (thresholds, effluent limits, filing
-> windows, penalties) come from the application's own domain knowledge base
-> (`Backend/knowledge/domains/bc-health-authority-regulations.json`), which carries `"sourceUrl": null`
-> and a self-assigned confidence rating. Those are synthesized content, not citations, and must be
-> confirmed against the primary sources (the Sewerage System Regulation, the BC Standard Practice
-> Manual, and the practitioner registry) before being relied on. That the system's regulatory ground
-> truth is unsourced is a real finding about this pipeline, and it is revisited in §5.
+> **scope boundary** (§2.3 above) is practitioner knowledge — mine, from working in the trade. The
+> **numeric regulatory figures** the *system* relies on come from the application's own domain
+> knowledge base (`Backend/knowledge/domains/bc-health-authority-regulations.json`), which carries
+> `"sourceUrl": null` and a self-assigned confidence rating. Those are synthesized content, not
+> citations. Every one of them that this repository actually uses has now been checked against the
+> primary source and cited in [`SOURCES.md`](SOURCES.md) — and the check found the corpus **mostly
+> right, and confidently wrong in one place** (§5.10), which is the worst distribution there is: right
+> often enough to be trusted, wrong exactly where nobody looked. That the system's regulatory ground
+> truth is unsourced is a real finding about this pipeline, and it is revisited in §5 and §6.3.
 
 ---
 
@@ -487,7 +511,7 @@ or WARNING classifications — they indicate real equipment problems requiring i
 
 That last provenance sentence used to read *"computed from manufacturer nameplate data and
 industry-standard thresholds (**NEC 430, DOE motor efficiency standards**)"* — and it was wrong twice
-over, in text the model is told is AUTHORITATIVE and which reaches customer reports. NEC 430.32 sizes
+over, in text the model is told is AUTHORITATIVE and which lands in the finished report. NEC 430.32 sizes
 motor overload protection; it does not define a seven-tier diagnostic scale, and it certainly does not
 say "80-90% FLA is optimal for a residential effluent pump." Those boundaries are the author's own
 engineering heuristic. And the NEC is the *US* electrical code — BC is governed by the Canadian
@@ -519,6 +543,16 @@ IMPORTANT: All numerical assessments and classifications in PRE-COMPUTED section
 by deterministic calculation. Use these values directly in the report. Do NOT recalculate
 percentages, thresholds, or classifications.
 ```
+
+> ⚠️ **`BELOW REGULATORY MINIMUM` is wrong, and it is quoted here verbatim because it is what the
+> system emits.** There is no regulatory minimum for dissolved oxygen in BC — not in BC Reg 326/2004,
+> not in the Standard Practice Manual V3 (both checked by full-text extraction; see
+> [`SOURCES.md`](SOURCES.md)). The 2.0 mg/L figure is an *operational* threshold from the product's
+> own unsourced corpus, and it is probably sound operations — but the word *REGULATORY* is an
+> affirmative claim the system cannot support, printed into a document a health authority may read.
+> **This is a live defect, and it is the same defect as the paragraph above, one layer down: real
+> knowledge wearing a borrowed uniform it never needed.** It is treated at length in §5.10, and the
+> transcript is not rewritten to hide it.
 
 It handles partial data explicitly (`:298-306`): if only some of the three tank measurements exist,
 it emits `SOLIDS: PARTIAL DATA — ... Cannot compute solids percentage: <missing fields> not
@@ -915,8 +949,48 @@ time you find the same bug is when you should stop trusting the fix and start tr
 - Enforce structured output (§5.2), and render the PDF from data rather than parsing Markdown.
 - Instrument. Write to `report_logs`. The table is already there.
 - Reconcile the solids thresholds (§5.5), which still disagree across three sources.
-- Source the regulatory corpus (§2.3, §6.2). It is the ground truth for a document read by
-  regulators, and it currently cites nothing.
+- **Strike the word *regulatory* from the dissolved-oxygen classification** (§5.10). One string, and
+  it is the only affirmative claim about the law that the system makes and cannot support.
+- Source the regulatory corpus (§2.3, §6.3). It is the ground truth for a document read by
+  regulators, and it currently cites nothing. Every figure this repository actually uses has now been
+  traced to a primary source by hand ([`SOURCES.md`](SOURCES.md)) — the corpus itself still has not.
+
+### 5.10 A threshold labelled "regulatory" that no regulation sets — **open**
+
+`computeNumericalClassifications()` classifies a dissolved-oxygen reading below 2.0 mg/L as
+**`BELOW REGULATORY MINIMUM — treatment impaired`**, and the system prompt's MEASUREMENT GUIDELINES
+tell the model that 2.0 mg/L *"is the regulatory minimum for an aerobic treatment unit."* That string
+is injected as an AUTHORITATIVE fact, and it reaches the report.
+
+**There is no regulatory minimum for dissolved oxygen in British Columbia.**
+
+- **BC Reg 326/2004 sets no dissolved-oxygen threshold of any kind.** It defines the treatment types
+  by BOD and TSS (Type 2: below 45 mg/L of each; Type 3: below 10 mg/L, plus fecal coliform) and says
+  nothing about DO.
+- **The Standard Practice Manual V3 sets none either.** That is a checked negative, not a failure to
+  find one: the manual was downloaded and its full text extracted, and every occurrence of "oxygen" in
+  it is the BOD definition, the aerobic/anaerobic glossary, or soil oxygen transport (§III-5.6.8).
+
+The figure traces to `bc-health-authority-regulations.json` — the corpus with `sourceUrl: null`
+(§2.3, §6.3). Sources and the extraction method are in [`SOURCES.md`](SOURCES.md).
+
+**The number is probably fine. The word is not.** An aerated unit does need aerobic conditions, and a
+DO of 1.4 mg/L in an ATU is a real diagnostic signal — as an *operational* threshold, 2.0 mg/L is
+defensible engineering, and the correlation rules built on it (§3.4) are sound. But *"regulatory"* is
+an affirmative claim about the law, made by the system, in a document an Environmental Health Officer
+may read, and the system cannot support it. **This is precisely the failure the electrical
+misattribution was** (§3.4) — real practitioner knowledge, correct on the merits, dressed in a
+citation it never needed and cannot honour — and finding the same shape twice, in the same file, is
+the more useful result. It says the defect is not a slip. It is a habit: when a heuristic feels solid,
+the reflex is to reach for an authority to back it, and the authority is invented.
+
+**Status: open, and disclosed rather than quietly patched.** The one-line product fix is to emit
+`BELOW OPERATIONAL THRESHOLD — treatment impaired` and to strike the word *regulatory* from the
+MEASUREMENT GUIDELINES line. This repository's prototype already does exactly that
+(`prototype/src/guardrails.js`, `prototype/src/prompt.js`), so the corrected wording is executable
+rather than proposed. Every transcript of *production* output in this document and in `prompts/` is
+left verbatim, wrong word included, because a case study that edits its own evidence to look better
+has become the thing it is warning about.
 
 ---
 
@@ -946,10 +1020,10 @@ under, no matter how good the model gets.
 
 ### 6.2 Maintenance, not inspection — and the exemplar that breaks the rule
 
-The certification boundary (§2.3): maintenance and inspection are separately-certified scopes of
-practice. The practitioners using this system hold the maintenance endorsement. A report that
-describes the visit as an *inspection* asserts a certification they do not hold, above their
-registration number.
+The scope boundary (§2.3): maintenance and inspection are two different services. The practitioners
+using this system perform maintenance. A report that describes the visit as an *inspection* asserts a
+service that was not rendered, above the practitioner's registration number — regardless of which
+endorsements they happen to hold (§2.3 on why the 2023 ASTTBC bulletin does not change this).
 
 The harm is not abstract. An inspection is what backs **property transactions and compliance
 verification**. A homeowner — or a buyer, or a lender — reading *"your inspection revealed…"* may
@@ -1097,7 +1171,12 @@ citation is suppressed entirely.
 
 **But the ground truth is itself unsourced** (§2.3). `bc-health-authority-regulations.json` carries
 `"sourceUrl": null`. The corpus the model is told to treat as authoritative for regulatory thresholds
-cites nothing. This is the sharpest finding in the whole system and it generalizes far past septic
+cites nothing. Tracing its figures to primary sources by hand — which this project eventually did,
+[`SOURCES.md`](SOURCES.md) — is the part worth dwelling on, because the corpus came back **mostly
+right and confidently wrong in one place** (§5.10). That is worse than being unreliable. An unreliable
+corpus gets checked. One that is right nine times out of ten gets trusted, and the tenth is the one
+that reaches a regulator. The *"per BC SPM V3 1/3 rule"* example above turns out to be a real rule,
+correctly cited — which is exactly why the DO "regulatory minimum" beside it reads as real too. This is the sharpest finding in the whole system and it generalizes far past septic
 tanks: **RAG does not make a claim true; it makes it consistent.** A retrieval corpus without
 provenance is a hallucination with better formatting and a longer half-life — it will be repeated
 identically across every report, which is exactly what makes it look reliable. Every regulatory value
@@ -1215,8 +1294,10 @@ other export of customer data — and until this audit, it had not had one.
 - Validation that mostly detects and rarely blocks, whose warnings nobody counts (§5.3).
 - A user-facing setting that silently does nothing (§5.1).
 - Three sources disagreeing about the solids threshold (§5.5).
-- A regulatory corpus that cites nothing — including for the certification boundary this whole
-  document rests on (§2.3, §6.3).
+- A regulatory corpus that cites nothing (§2.3, §6.3) — and one figure inside it that the system
+  labels **REGULATORY** although no BC regulation sets it (§5.10, **open**). The scope boundary this
+  document rests on is *not* from that corpus: it is the author's own practitioner knowledge, and it
+  is labelled as such (§2.3).
 
 **The one transferable idea:** in a generative system, *the prompt is part of the product.* It is
 user-facing copy, it is a data egress point, and it is a place compliance rules can hide from your

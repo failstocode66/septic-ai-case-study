@@ -175,8 +175,15 @@ A case study whose subject has no flaws is marketing.
   No property, person, business, or credential number here is real. SepticScribe itself is a private
   repository and is not included.
 - The **maintenance-vs-inspection rule** at the centre of this project is practitioner knowledge —
-  the author works in the septic industry. It is informed industry practice, not a reading of a
-  statute. The *numeric* regulatory figures the product relies on come from its own domain corpus,
-  which is unsourced — that is one of the audit's findings, not the basis for the rule. See
-  [CASE-STUDY.md §2.3](CASE-STUDY.md). **Nothing here is legal advice.**
+  the author works in the septic industry, and it comes from doing the work and from conversations
+  with inspectors, maintenance providers, and WACOWMA representatives. It is informed industry
+  practice, stated as such rather than dressed up as a citation. See
+  [CASE-STUDY.md §2.3](CASE-STUDY.md).
+- **Every regulatory figure used here is checked against a primary source**, with URL and access date,
+  in [SOURCES.md](SOURCES.md) — BC Reg 326/2004, the Standard Practice Manual V3, ASTTBC. One figure
+  failed that check and is reported as an open product defect rather than quietly fixed: the product
+  labels a dissolved-oxygen reading below 2.0 mg/L `BELOW REGULATORY MINIMUM`, and **no BC regulation
+  sets a dissolved-oxygen minimum** (CASE-STUDY.md §5.10). The *numeric* regulatory figures the
+  product itself relies on come from an unsourced domain corpus — that is one of the audit's findings,
+  and it is not the basis for the rule above. **Nothing here is legal advice.**
 - MIT licensed. The prototype is a teaching artifact, not a product.

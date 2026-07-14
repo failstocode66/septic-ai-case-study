@@ -269,6 +269,12 @@ with nothing to do is a bad refusal; this one leaves them with a work order and 
   The projections are computed and then rendered into narrative and discarded. This prompt is a
   design; the deterministic half of it already exists and is already good, which is what makes it
   the cheapest high-value thing on this list to actually build.
-- Operating-permit intervals (6-12 months for Type 2/3, reports filed with the Health Authority)
-  come from the system's own unsourced knowledge corpus — **re-verify against the BC Sewerage System
-  Regulation before publishing any specific interval figure.** See prompt 09 §6.
+- **Interval figures, now primary-sourced.** The 6-month / 12-month figures used here are the
+  *minimum initial* maintenance and monitoring frequencies in the **Standard Practice Manual V3
+  (2014), Table II-62** — 6 months for Type 2/3, 12 months for Type 1, for the first 12–14 months of
+  operation; after that the **maintenance plan** sets the frequency (SPM V3 minimum long-term: 2 years
+  for Type 2/3, 5 years otherwise). The obligation runs through the maintenance plan, not an operating
+  permit: **BC Reg 326/2004 s.10(1)** requires the owner to maintain the system in accordance with it,
+  and **s.10(2)** requires the owner to *keep* records. An earlier draft of this file said maintenance
+  reports must be "filed with the Health Authority" — **the regulation imposes no such duty**, and that
+  claim is withdrawn. See [`../SOURCES.md`](../SOURCES.md) and prompt 09 §1.

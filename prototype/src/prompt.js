@@ -183,7 +183,7 @@ MEASUREMENT GUIDELINES:
 - Report Scum Thickness, Sludge Depth and Total Fluid Depth as plain measurements with NO status column. Individually they are not good or bad.
 - Only the total Solids Content percentage indicates pumping need. Thresholds: below ${THRESHOLDS.solids.monitor}% = within normal range; ${THRESHOLDS.solids.monitor}-${THRESHOLDS.solids.pump}% = approaching threshold, monitor closely; ${THRESHOLDS.solids.pump}%+ = exceeds threshold, pumping recommended.
 - Filter pressure differential: below ${THRESHOLDS.filterPressure.dirty} PSI = clean; ${THRESHOLDS.filterPressure.dirty}-${THRESHOLDS.filterPressure.clogged} PSI = dirty, plan cleaning; ${THRESHOLDS.filterPressure.clogged}+ PSI = clogged, immediate cleaning.
-- Dissolved oxygen: ${THRESHOLDS.dissolvedOxygen.minimum} mg/L is the regulatory minimum for an aerobic treatment unit. Below ${THRESHOLDS.dissolvedOxygen.critical} mg/L indicates anaerobic conditions and probable treatment failure.
+- Dissolved oxygen: ${THRESHOLDS.dissolvedOxygen.minimum} mg/L is the operational target for an aerobic treatment unit -- an operational threshold, NOT a regulatory limit; do not describe it as one. Below ${THRESHOLDS.dissolvedOxygen.critical} mg/L indicates anaerobic conditions and probable treatment failure.
 - High scum (over 4-5 inches) may indicate biological issues such as inappropriate products entering the system. Mention narratively, not as a table threshold.
 
 CONFIDENCE CALIBRATION:
