@@ -270,20 +270,23 @@ or more specialisations. As SepticScribe's own domain corpus has it, **"Maintena
 Provider" and "Private Inspector" are distinct registration categories** with
 different scopes of practice. The contractor using this system holds the former.
 
-> ⚠️ **Sourcing caveat, and it matters.** That certification-boundary claim — the
-> premise the entire ethics argument rests on — traces to SepticScribe's own
-> knowledge corpus (`Backend/knowledge/domains/bc-health-authority-regulations.json`),
-> which carries **`"sourceUrl": null`** and a **self-assigned** confidence rating.
-> It is synthesized, LLM-authored content, not a citation. It has **not** been
-> verified against ASTTBC's published ROWP scopes of practice, BC Reg 326/2004, or
-> the Standard Practice Manual. Nor have the dependent figures quoted elsewhere in
-> this repo (the 22,700 L/day threshold, Type 1/2/3 BOD/TSS limits, filing windows,
-> the $25,000/day penalty). **Do not rely on any of them as legal advice, and do not
-> repeat them without checking the primary source.** Verifying them against ASTTBC
-> and BC Laws is a required step before this is published anywhere as guidance for
-> practitioners — and the irony is the point: a case study about not trusting an LLM
-> near a regulatory document should not itself rest on an unsourced LLM-written
-> corpus. That the corpus is unsourced is one of this project's real findings.
+> **Where this claim comes from.** The certification boundary — the premise the
+> ethics argument rests on — is **practitioner knowledge**. I work in this industry,
+> and it comes from doing the work and from conversations with inspectors,
+> maintenance providers, and WACOWMA representatives. It is not a reading of a
+> statute, and I am not presenting it as one: treat it as informed industry
+> practice, **not legal advice**, and confirm the exact ROWP categories against
+> ASTTBC and BC Reg 326/2004 before relying on them for anything consequential.
+>
+> The **dependent figures** quoted elsewhere in this repo are a different matter (the
+> 22,700 L/day threshold, Type 1/2/3 BOD/TSS limits, filing windows, the $25,000/day
+> penalty). Those come from SepticScribe's own knowledge corpus
+> (`Backend/knowledge/domains/bc-health-authority-regulations.json`), which carries
+> **`"sourceUrl": null`** and a **self-assigned** confidence rating — synthesized
+> content, not citations. Do not repeat them without checking the primary source.
+> That the system's regulatory ground truth is unsourced is one of this project's
+> real findings, and it is a finding about the *pipeline* — not the origin of the
+> rule above.
 
 The *engineering* argument does not depend on the regulatory detail being exactly
 right, and it is worth separating the two. Whatever the precise scope boundary, the
@@ -403,7 +406,8 @@ invisible.
 
 ## Privacy
 
-SepticScribe has real beta customers. Nothing derived from them appears here.
+SepticScribe is **pre-beta and has no customers**, so there is no customer data to leak. Everything
+here is synthetic regardless, and would be either way.
 
 - All three visits are invented. Streets are fictional, the towns are real, no
   person is named, phone/email formats use reserved fiction blocks.

@@ -114,8 +114,9 @@ the technician does not hold, above their own registration number.
 The harm is not abstract, and it does not land on us. A homeowner — or a buyer, or a lender — who
 reads *"your inspection revealed…"* may reasonably rely on that document as an inspection report. It
 is not one. Someone makes a decision on the strength of a document that never claimed to be what it
-appeared to be. And the registration that an enforcement action attaches to belongs to our customer,
-not to us. **The first person harmed by that bug is the person paying us.**
+appeared to be. And the registration that an enforcement action attaches to belongs to the contractor,
+not to us. **The first person harmed by that bug would be the person paying us** — we are pre-beta and
+have no customers yet, so it harmed nobody, but that is timing, not absolution.
 
 So we treat the word as a hard boundary. We had swept the app for it: the buttons, the menus, the
 emails, the PDF headers, the App Store permission strings. The data model calls the thing a
@@ -191,8 +192,9 @@ to permit. It substitutes cleanly — *"a qualified technician must **examine** 
 **assess** whether repair is necessary"* — so the reports don't read worse. But over-suppression is
 over-suppression, and we would rather say so than let you find it.
 
-While we were in there, we found and fixed three more: customer property details were being sent to
-the model provider even though the finished report reassembles them locally anyway (they now aren't);
+While we were in there, we found and fixed three more: property details and the technician's name were
+being sent to the model provider even though the finished report reassembles them locally anyway (they
+now aren't — and being pre-beta, that payload never carried a real person's data);
 one of the deterministic guardrails was silently doing nothing on the exact system type it was written
 for, because it was reading a field name that system doesn't use; and an "authoritative" prompt block
 was citing an American electrical standard it doesn't actually derive from, in the wrong country.

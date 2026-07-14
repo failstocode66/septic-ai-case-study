@@ -424,11 +424,15 @@ cleanly (*"a qualified technician must **examine** the pump impeller… and **as
 necessary"*), so the reports do not read worse. But a guardrail must be reported for what it does, not
 what it was meant to do.
 
-**Regulatory caveat, stated because this document is public:** the certification-boundary facts in
-§1 are drawn from the system's own knowledge base
-(`Backend/knowledge/domains/bc-health-authority-regulations.json`), which carries `"sourceUrl":
-null` and a self-assigned confidence rating. **It is synthesized content, not a citation.** Before
-publication, the four R.O.W.P. categories and the Maintenance-Provider/Private-Inspector boundary
-must be re-verified against ASTTBC directly. Publishing a regulatory claim sourced from an
-LLM-written RAG corpus — inside a case study about not trusting LLMs near regulatory documents —
-would be a self-inflicted wound, and it is exactly the kind of thing this whole document is about.
+**Where the rule comes from, stated because this document is public:** the
+Maintenance-Provider / Private-Inspector boundary in §1 is **practitioner knowledge** — the author
+works in this industry, and it comes from doing the work and from conversations with inspectors,
+maintenance providers, and WACOWMA representatives. It is informed industry practice, **not legal
+advice**, and not a reading of a statute; confirm the exact R.O.W.P. categories against ASTTBC before
+relying on them for anything consequential.
+
+The *numeric* regulatory figures the system treats as authoritative are a separate matter: those come
+from its own knowledge base (`Backend/knowledge/domains/bc-health-authority-regulations.json`), which
+carries `"sourceUrl": null` and a self-assigned confidence rating. **That is synthesized content, not
+a citation** — and a RAG corpus without provenance, inside a system that tells the model to treat it
+as ground truth, is one of the real findings of this project.

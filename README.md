@@ -28,8 +28,11 @@ demonstrating one key use case, and write it up honestly — problem, approach, 
 limitations, ethics.
 
 Most portfolio pieces of this kind are built on a toy. This one is not. **SepticScribe is a real
-commercial product with real paying customers**, and the pipeline described here is the one that runs
-in production. Two consequences worth stating up front:
+commercial product** — a working system built for a regulated trade — and the pipeline described here
+is the one it ships. It is **pre-beta and has no customers yet**, which is worth saying plainly for
+two reasons: it means none of the defects below harmed anyone, and it means that is a fact about
+timing rather than a defence. The code path was live and the defects were real. Two consequences
+worth stating up front:
 
 - **The constraints are real.** The regulatory boundary at the centre of the ethics section is not a
   hypothetical. Getting it wrong misrepresents an uncertified service in a document signed with a
@@ -151,9 +154,11 @@ repository is invented, and where one could not be honestly obtained, it is not 
 
 ## The defects
 
-**They were fixed before this was published** (SepticScribe `c391dc5` and `276cf32`): customer PII was
-being sent to the model provider on every report; the regulated word was in the few-shot exemplar with
-nothing downstream to catch it; a deterministic guardrail was silently dead on the exact system it was
+**They were fixed before this was published** (SepticScribe `c391dc5` and `276cf32`): the property
+address, land-title parcel ID and technician name were being sent to the model provider on every
+report, though the document re-composes them locally and never needed them — the product is pre-beta,
+so no real person's data was ever in that payload, but shipping it would have made it customer PII on
+day one; the regulated word was in the few-shot exemplar with nothing downstream to catch it; a deterministic guardrail was silently dead on the exact system it was
 written for; and an authoritative prompt block cited a standard it does not come from, in the wrong
 jurisdiction.
 
@@ -169,6 +174,9 @@ A case study whose subject has no flaws is marketing.
 - **No customer data appears anywhere in this repository.** Every example runs on a synthetic record.
   No property, person, business, or credential number here is real. SepticScribe itself is a private
   repository and is not included.
-- The regulatory claims are sourced from the product's own domain corpus, which is unsourced —
-  see the caveat in [CASE-STUDY.md §2.3](CASE-STUDY.md). **Nothing here is legal advice.**
+- The **maintenance-vs-inspection rule** at the centre of this project is practitioner knowledge —
+  the author works in the septic industry. It is informed industry practice, not a reading of a
+  statute. The *numeric* regulatory figures the product relies on come from its own domain corpus,
+  which is unsourced — that is one of the audit's findings, not the basis for the rule. See
+  [CASE-STUDY.md §2.3](CASE-STUDY.md). **Nothing here is legal advice.**
 - MIT licensed. The prototype is a teaching artifact, not a product.

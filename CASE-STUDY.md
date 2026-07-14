@@ -28,7 +28,9 @@ study argues is most important. That is deliberate: a case study whose subject h
 marketing.
 
 **The serious defects found by this audit were fixed before it was published** (SepticScribe commits
-`c391dc5` and `276cf32`, 2026-07-14): customer PII was being sent to the model provider on every generation (§6.5);
+`c391dc5` and `276cf32`, 2026-07-14): the property address, land-title parcel ID and technician name were being
+sent to the model provider on every generation, unnecessarily — the product is pre-beta, so no real person's data
+was in that payload, but it would have been customer PII the day it launched (§6.5);
 the regulated word *"inspection"* was sitting in the few-shot exemplar the model is told to imitate,
 with nothing downstream to catch it (§6.2); a deterministic guardrail was silently dead on the exact
 system it was written for (§5.8); and an authoritative prompt block attributed its severity scale to a
@@ -163,18 +165,24 @@ practice from **maintenance**. A practitioner registered to perform maintenance 
 authorized to perform inspections; inspection is the certification that backs property transactions
 and compliance verification. The two are different registrations with different requirements.
 
-> ⚠️ **Sourcing, stated up front because this claim carries the whole argument.** That distinction
-> traces to SepticScribe's own domain corpus (`Backend/knowledge/domains/bc-health-authority-regulations.json`),
-> which carries **`sourceUrl: null`** and a **self-assigned** confidence rating: it is synthesized,
-> LLM-authored content, not a citation. It has not been verified against ASTTBC's published scopes of
-> practice, BC Reg 326/2004, or the Standard Practice Manual, and neither have the other regulatory
-> figures in this document. **Nothing here is legal advice**, and primary-source verification is a
-> prerequisite to publishing any of it as guidance for practitioners.
+> **Sourcing, stated up front because this claim carries the whole argument.** The
+> maintenance/inspection boundary above does not come from the system's knowledge corpus, and it is
+> not my reading of a statute. It comes from working in this industry — from doing the work, and from
+> conversations with inspectors, maintenance providers, and WACOWMA representatives. I am stating it
+> as a practitioner, and I am labelling it as **practitioner knowledge** rather than dressing it up as
+> a citation, because those are two different things and only one of them would be honest here.
 >
-> The irony is not lost on me, and it is worth naming rather than hiding: a case study about not
-> trusting a language model near a regulatory document rests its central regulatory claim on an
-> unsourced, LLM-written corpus. **That the corpus is unsourced is itself one of this audit's
-> findings** (§4.3, §5.9) — the system's ground truth for a document a regulator reads cites nothing.
+> What that means for you as a reader: treat it as informed industry practice, not as legal advice.
+> **Nothing here is legal advice.** If you need the exact certification categories for a consequential
+> decision, confirm them against ASTTBC and BC Reg 326/2004 — as you would with any practitioner's
+> account of their own trade.
+>
+> Separately, and this is a *finding* rather than a caveat: the system's own regulatory ground truth
+> (`Backend/knowledge/domains/bc-health-authority-regulations.json`) carries **`sourceUrl: null`** and
+> a **self-assigned** confidence rating. The numeric thresholds it feeds the model cite nothing
+> (§4.3, §5.9) — the ground truth for a document a regulator reads has no provenance. That is a real
+> defect in the pipeline. It is not, however, the basis for the rule above, and the earlier version of
+> this document was wrong to imply it was.
 >
 > The *engineering* argument does not depend on the regulatory detail being exactly right. Whatever
 > the precise scope boundary, the vendor and the contractor agree the document must describe
@@ -194,14 +202,15 @@ higher-status, more common, more official-sounding word, and the training distri
 with it. Left alone, a language model will upgrade the claim. Section 6 shows that in this system it
 demonstrably still can.
 
-> **Sourcing note.** The regulatory facts in this document as the *system* understands them come
-> from the application's own domain knowledge base
-> (`Backend/knowledge/domains/bc-health-authority-regulations.json`). That file carries
-> `"sourceUrl": null` and a self-assigned confidence rating. It is synthesized content, not a
-> citation. Any regulatory claim here — the certification boundary above included — must be
+> **Sourcing note.** Distinguish two things that the first draft of this document ran together. The
+> **certification boundary** (§2.3 above) is practitioner knowledge — mine, from working in the trade.
+> The **numeric regulatory figures** the *system* relies on (thresholds, effluent limits, filing
+> windows, penalties) come from the application's own domain knowledge base
+> (`Backend/knowledge/domains/bc-health-authority-regulations.json`), which carries `"sourceUrl": null`
+> and a self-assigned confidence rating. Those are synthesized content, not citations, and must be
 > confirmed against the primary sources (the Sewerage System Regulation, the BC Standard Practice
-> Manual, and the practitioner registry itself) before being relied on. That the system's regulatory
-> ground truth is unsourced is a real finding about this pipeline, and it is revisited in §5.
+> Manual, and the practitioner registry) before being relied on. That the system's regulatory ground
+> truth is unsourced is a real finding about this pipeline, and it is revisited in §5.
 
 ---
 
@@ -949,7 +958,9 @@ harm vector: someone makes a decision on the strength of a document that never c
 appeared to be. Secondary harms follow: a public rebate program funds *maintenance*, so a record
 describing an *inspection* is a mislabelled document backing a public-funds claim; and the
 practitioner's own registration — not the software vendor's — is what an enforcement action attaches
-to. **The first person harmed by this bug is the paying customer.**
+to. **The first person harmed by this bug would be the customer, not the vendor** — and because
+SepticScribe is pre-beta, with no customers yet, the honest statement is that this was caught before it
+could harm anyone, not that it did.
 
 The system enforces the rule in eight places. The data model calls the object a *maintenance event*.
 The mobile UI's route is internally named `InspectionsList` but its user-visible title is
