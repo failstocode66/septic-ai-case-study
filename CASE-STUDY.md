@@ -44,10 +44,12 @@ outputs, and every one of those outputs is committed to this repository (§3.7).
 
 **Every regulatory figure used here was checked against the primary source before publication** —
 BC Reg 326/2004 and the Standard Practice Manual V3 were read, not summarized. The register, with
-URLs and access dates, is [`SOURCES.md`](SOURCES.md). One figure failed that check and is **still live
-in the product**: the system labels a dissolved-oxygen reading below 2.0 mg/L as `BELOW REGULATORY
-MINIMUM`, and **no BC regulation sets a dissolved-oxygen minimum at all** (§5.10). It is reported as
-an open defect rather than quietly corrected, and the transcripts that contain it are left verbatim.
+URLs and access dates, is [`SOURCES.md`](SOURCES.md). One figure failed that check: the system
+labelled a dissolved-oxygen reading below 2.0 mg/L as `BELOW REGULATORY MINIMUM`, and **no BC
+regulation sets a dissolved-oxygen minimum at all** (§5.10). Like the other defects, it was **fixed
+before publication** (commit `b2f9ef2`, 2026-07-15 — backend, mobile, knowledge corpus, and the
+CI drift-check that pins the labels). The audit-time transcripts that contain the wrong word are
+left verbatim, because evidence should not be edited to flatter its subject.
 The domain rule at the centre of this document — that maintenance is not inspection — is **the
 author's own practitioner knowledge**, from working in this trade and talking to the people in it, and
 it is labelled as that rather than dressed up as a citation (§2.3).
@@ -179,11 +181,13 @@ standard it was performed to.
 
 > **Sourcing, stated up front because this claim carries the whole argument.** The
 > maintenance/inspection boundary above does not come from the system's knowledge corpus, and it is
-> not my reading of a statute. It comes from working in this industry — from doing the work, and from
-> conversations with inspectors, maintenance providers, and WACOWMA representatives. I am stating it
-> as a practitioner, and I am labelling it as **practitioner knowledge** rather than dressing it up as
-> a citation, because those are two different things and only one of them would be honest here. Treat
-> it as informed industry practice. **Nothing here is legal advice.**
+> not my reading of a statute. It comes from working in this industry: I worked professionally in
+> septic and completed the **WACOWMA maintenance-provider program**, and the boundary as stated here
+> reflects that training and conversations with inspectors, maintenance providers, and WACOWMA
+> representatives. I am stating it as a practitioner, and I am labelling it as **practitioner
+> knowledge** rather than dressing it up as a citation, because those are two different things and
+> only one of them would be honest here. Treat it as informed industry practice. **Nothing here is
+> legal advice.**
 >
 > **One thing I got wrong in an earlier draft, and it is worth the paragraph.** That draft said a
 > practitioner holding the *Maintenance Provider* endorsement "is not thereby authorized to perform
@@ -544,15 +548,16 @@ by deterministic calculation. Use these values directly in the report. Do NOT re
 percentages, thresholds, or classifications.
 ```
 
-> ⚠️ **`BELOW REGULATORY MINIMUM` is wrong, and it is quoted here verbatim because it is what the
-> system emits.** There is no regulatory minimum for dissolved oxygen in BC — not in BC Reg 326/2004,
-> not in the Standard Practice Manual V3 (both checked by full-text extraction; see
-> [`SOURCES.md`](SOURCES.md)). The 2.0 mg/L figure is an *operational* threshold from the product's
-> own unsourced corpus, and it is probably sound operations — but the word *REGULATORY* is an
-> affirmative claim the system cannot support, printed into a document a health authority may read.
-> **This is a live defect, and it is the same defect as the paragraph above, one layer down: real
-> knowledge wearing a borrowed uniform it never needed.** It is treated at length in §5.10, and the
-> transcript is not rewritten to hide it.
+> ⚠️ **`BELOW REGULATORY MINIMUM` was wrong, and it is quoted here verbatim because it is what the
+> system emitted at the time of the audit.** There is no regulatory minimum for dissolved oxygen in
+> BC — not in BC Reg 326/2004, not in the Standard Practice Manual V3 (both checked by full-text
+> extraction; see [`SOURCES.md`](SOURCES.md)). The 2.0 mg/L figure is an *operational* threshold from
+> the product's own unsourced corpus, and it is probably sound operations — but the word *REGULATORY*
+> was an affirmative claim the system could not support, printed into a document a health authority
+> may read. **It was the same defect as the paragraph above, one layer down: real knowledge wearing a
+> borrowed uniform it never needed.** Fixed in `b2f9ef2` (2026-07-15) — the system now emits `BELOW
+> OPERATIONAL THRESHOLD`. The full account, including where else the false citation lived, is §5.10;
+> the transcript above is not rewritten to hide it.
 
 It handles partial data explicitly (`:298-306`): if only some of the three tank measurements exist,
 it emits `SOLIDS: PARTIAL DATA — ... Cannot compute solids percentage: <missing fields> not
@@ -926,7 +931,7 @@ time you find the same bug is when you should stop trusting the fix and start tr
 
 ### 5.9 What I would do differently
 
-**Done since this audit** (commits `c391dc5` and `276cf32`, 2026-07-14):
+**Done since this audit** (commits `c391dc5`, `276cf32`, 2026-07-14; `b2f9ef2`, 2026-07-15):
 
 - ✅ **Redact PII from the prompt** (§6.5). Three fields, zero quality cost, pinned by a test.
 - ✅ **Enforce the terminology rule mechanically** (§6.2): negative constraint, blocking two-tier
@@ -934,6 +939,9 @@ time you find the same bug is when you should stop trusting the fix and start tr
 - ✅ **Fix the second dead guardrail** (§5.8, commit `276cf32`) and give it regression tests built from
   the registry's real field ids.
 - ✅ **Stop attributing the severity scale to a standard it does not come from** (§3.4).
+- ✅ **Strike the word *regulatory* from the dissolved-oxygen classification** (§5.10, commit
+  `b2f9ef2`) — backend, mobile, retrieval corpus, and a drift-check pin, with a test asserting the
+  word can never return.
 
 **Still open, in the order I would do them:**
 
@@ -949,18 +957,16 @@ time you find the same bug is when you should stop trusting the fix and start tr
 - Enforce structured output (§5.2), and render the PDF from data rather than parsing Markdown.
 - Instrument. Write to `report_logs`. The table is already there.
 - Reconcile the solids thresholds (§5.5), which still disagree across three sources.
-- **Strike the word *regulatory* from the dissolved-oxygen classification** (§5.10). One string, and
-  it is the only affirmative claim about the law that the system makes and cannot support.
 - Source the regulatory corpus (§2.3, §6.3). It is the ground truth for a document read by
   regulators, and it currently cites nothing. Every figure this repository actually uses has now been
   traced to a primary source by hand ([`SOURCES.md`](SOURCES.md)) — the corpus itself still has not.
 
-### 5.10 A threshold labelled "regulatory" that no regulation sets — **open**
+### 5.10 A threshold labelled "regulatory" that no regulation sets — **fixed in `b2f9ef2`**
 
-`computeNumericalClassifications()` classifies a dissolved-oxygen reading below 2.0 mg/L as
-**`BELOW REGULATORY MINIMUM — treatment impaired`**, and the system prompt's MEASUREMENT GUIDELINES
-tell the model that 2.0 mg/L *"is the regulatory minimum for an aerobic treatment unit."* That string
-is injected as an AUTHORITATIVE fact, and it reaches the report.
+`computeNumericalClassifications()` classified a dissolved-oxygen reading below 2.0 mg/L as
+**`BELOW REGULATORY MINIMUM — treatment impaired`** — and the passing branch was worse: it emitted
+*`MEETS REGULATORY MINIMUM (BC SPM V3 requires ≥2.0 mg/L)`*, a direct citation to a requirement the
+SPM does not contain. That string was injected as an AUTHORITATIVE fact, and it reached the report.
 
 **There is no regulatory minimum for dissolved oxygen in British Columbia.**
 
@@ -978,19 +984,32 @@ The figure traces to `bc-health-authority-regulations.json` — the corpus with 
 DO of 1.4 mg/L in an ATU is a real diagnostic signal — as an *operational* threshold, 2.0 mg/L is
 defensible engineering, and the correlation rules built on it (§3.4) are sound. But *"regulatory"* is
 an affirmative claim about the law, made by the system, in a document an Environmental Health Officer
-may read, and the system cannot support it. **This is precisely the failure the electrical
+may read, and the system could not support it. **This is precisely the failure the electrical
 misattribution was** (§3.4) — real practitioner knowledge, correct on the merits, dressed in a
 citation it never needed and cannot honour — and finding the same shape twice, in the same file, is
 the more useful result. It says the defect is not a slip. It is a habit: when a heuristic feels solid,
 the reflex is to reach for an authority to back it, and the authority is invented.
 
-**Status: open, and disclosed rather than quietly patched.** The one-line product fix is to emit
-`BELOW OPERATIONAL THRESHOLD — treatment impaired` and to strike the word *regulatory* from the
-MEASUREMENT GUIDELINES line. This repository's prototype already does exactly that
-(`prototype/src/guardrails.js`, `prototype/src/prompt.js`), so the corrected wording is executable
-rather than proposed. Every transcript of *production* output in this document and in `prompts/` is
-left verbatim, wrong word included, because a case study that edits its own evidence to look better
-has become the thing it is warning about.
+**Status: fixed in `b2f9ef2` (2026-07-15), before publication.** The corrected wording was designed
+and tested in this repository's prototype first (`prototype/src/guardrails.js`,
+`prototype/src/prompt.js`), then ported into the product. The fix turned out to be wider than the
+one string the audit first flagged — which is itself the recurring lesson of §5.8 about trusting a
+fix before tracing the class:
+
+- `aiReportService.js` — both branches: `MEETS OPERATIONAL TARGET` / `BELOW OPERATIONAL THRESHOLD`,
+  false SPM citation removed.
+- The **mobile app** carried matching labels *and* a reference line reading *"≥ 2.0 mg/L required
+  (BC SPM V3)"* (`Mobile/src/data/diagnosticTables.ts`) — same false citation, second surface.
+- The **retrieval corpus** taught it too: `unknown-vendor-diagnostics.json` opened its generic-ATU
+  guidance with *"BC SPM V3 requires ≥2.0 mg/L"* and closed by calling DO a "regulatory minimum",
+  conflating it with the BOD5 ≤45 mg/L figure that genuinely *is* regulatory (BC Reg 326/2004 s.1).
+  The chunk now separates the two, and the production vector store was re-ingested and verified.
+- The **CI drift-check** (`checkDiagnosticThresholds.js`) pins the new labels across backend and
+  mobile, and a unit test asserts the word REGULATORY can never return to the DO classification.
+
+Every transcript of *audit-time* output in this document and in `prompts/` is left verbatim, wrong
+word included, because a case study that edits its own evidence to look better has become the thing
+it is warning about.
 
 ---
 
@@ -1294,10 +1313,11 @@ other export of customer data — and until this audit, it had not had one.
 - Validation that mostly detects and rarely blocks, whose warnings nobody counts (§5.3).
 - A user-facing setting that silently does nothing (§5.1).
 - Three sources disagreeing about the solids threshold (§5.5).
-- A regulatory corpus that cites nothing (§2.3, §6.3) — and one figure inside it that the system
-  labels **REGULATORY** although no BC regulation sets it (§5.10, **open**). The scope boundary this
-  document rests on is *not* from that corpus: it is the author's own practitioner knowledge, and it
-  is labelled as such (§2.3).
+- ✅ A regulatory corpus that cites nothing (§2.3, §6.3) — and one figure inside it that the system
+  labelled **REGULATORY** although no BC regulation sets it (§5.10, fixed in `b2f9ef2` across
+  backend, mobile, and the corpus itself; sourcing the *rest* of the corpus remains open). The scope
+  boundary this document rests on is *not* from that corpus: it is the author's own practitioner
+  knowledge, and it is labelled as such (§2.3).
 
 **The one transferable idea:** in a generative system, *the prompt is part of the product.* It is
 user-facing copy, it is a data egress point, and it is a place compliance rules can hide from your
@@ -1307,7 +1327,8 @@ were relying on returned an empty string and nobody noticed.
 ---
 
 *Source references are to SepticScribe as audited at commit `a37c4d9` (2026-07-13). The defects
-identified above were fixed in `c391dc5` (2026-07-14) — before publication — and the prompt-size
+identified above were fixed before publication — `c391dc5` and `276cf32` (2026-07-14), and `b2f9ef2`
+(2026-07-15) for the dissolved-oxygen labelling of §5.10 — and the prompt-size
 measurements in §4.1 are re-derived against that commit by `prototype/src/measure-production-prompt.js`,
 which imports the product's own prompt builder rather than reimplementing it. The terminology
 experiment in §6.2 was run live against `claude-haiku-4-5`; all 48 raw model outputs are committed in

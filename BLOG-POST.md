@@ -111,10 +111,11 @@ property sale or a compliance verification — is an assessment of an existing s
 delivered to its own standard, with its own deliverables. Describing a maintenance visit as an
 inspection asserts a service that was not rendered, above the technician's own registration number.
 
-(That rule is not something we read in a statute. It is practitioner knowledge: one of us works in
-this industry, and it comes from doing the work and from conversations with inspectors, maintenance
-providers, and WACOWMA representatives. We say so rather than dressing it up as a citation — and the
-regulatory figures elsewhere in the project *are* cited, to primary sources, with access dates.)
+(That rule is not something we read in a statute. It is practitioner knowledge: one of us worked
+professionally in septic and completed the WACOWMA maintenance-provider program, and the rule comes
+from that training, the work itself, and conversations with inspectors, maintenance providers, and
+WACOWMA representatives. We say so rather than dressing it up as a citation — and the regulatory
+figures elsewhere in the project *are* cited, to primary sources, with access dates.)
 
 The harm is not abstract, and it does not land on us. A homeowner — or a buyer, or a lender — who
 reads *"your inspection revealed…"* may reasonably rely on that document as an inspection report. It
@@ -197,12 +198,15 @@ to permit. It substitutes cleanly — *"a qualified technician must **examine** 
 **assess** whether repair is necessary"* — so the reports don't read worse. But over-suppression is
 over-suppression, and we would rather say so than let you find it.
 
-While we were in there, we found and fixed three more: property details and the technician's name were
+While we were in there, we found and fixed four more: property details and the technician's name were
 being sent to the model provider even though the finished report reassembles them locally anyway (they
 now aren't — and being pre-beta, that payload never carried a real person's data);
 one of the deterministic guardrails was silently doing nothing on the exact system type it was written
-for, because it was reading a field name that system doesn't use; and an "authoritative" prompt block
-was citing an American electrical standard it doesn't actually derive from, in the wrong country.
+for, because it was reading a field name that system doesn't use; an "authoritative" prompt block
+was citing an American electrical standard it doesn't actually derive from, in the wrong country; and
+a dissolved-oxygen threshold was labelled a "regulatory minimum" when no BC regulation sets one —
+sound engineering wearing a citation it never needed, which is the same defect as the electrical one
+and finding it twice is exactly why we now treat it as a habit to check for rather than a slip.
 
 Every one of those shipped as a fix **before** this was written down.
 
