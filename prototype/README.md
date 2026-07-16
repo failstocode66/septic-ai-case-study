@@ -274,7 +274,7 @@ The contractor using this system performs maintenance.
 > **Where this claim comes from, and it is the strength of this project rather than
 > its weak point.** The boundary is **practitioner knowledge**. I work in this
 > industry; it comes from doing the work and from conversations with inspectors,
-> maintenance providers, and WACOWMA representatives. It is first-hand industry
+> maintenance providers, and authorities in the industry. It is first-hand industry
 > practice, stated as such rather than dressed up as a citation to a regulation it is
 > not. It is **not legal advice**.
 >
