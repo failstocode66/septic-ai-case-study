@@ -208,7 +208,9 @@ a dissolved-oxygen threshold was labelled a "regulatory minimum" when no BC regu
 sound engineering wearing a citation it never needed, which is the same defect as the electrical one
 and finding it twice is exactly why we now treat it as a habit to check for rather than a slip.
 
-Every one of those shipped as a fix **before** this was written down.
+Every one of those shipped as a fix **before** this was written down, in July 2026. The product's code
+is private, so that is our account rather than something the companion repository can show; its
+provenance notes say which claims a reader can check directly.
 
 ---
 

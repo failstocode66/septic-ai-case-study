@@ -3,12 +3,15 @@
 Every regulatory figure used in this repository is listed here, with the primary source it was
 checked against and the date it was read. Nothing in this repository is legal advice.
 
+The sources were read on the access dates shown (2026-07-14) and have **not** been re-checked since.
+Regulations, manuals and registration-body policy change; nothing here asserts that they are current.
+
 Three rules were applied, and they are worth stating because they explain the shape of the list:
 
 1. **A figure that could not be traced to a primary source was cut, not hedged.** One was: see
    *The 2.0 mg/L dissolved-oxygen threshold* below.
 2. **Practitioner knowledge is labelled as practitioner knowledge**, not dressed up as a citation.
-   The author works in this industry; where a claim comes from that work rather than from a
+   The author has worked in this industry; where a claim comes from that work rather than from a
    document, it says so.
 3. **A figure is only quoted where it is actually used.** An earlier draft of this repo carried
    caveats disclaiming figures (a 22,700 L/day threshold, a "$25,000/day penalty", a "30-day filing
@@ -123,8 +126,8 @@ vector is unchanged and is the strongest leg of the argument: a homeowner, buyer
 
 ## The one figure that is *not* regulatory: **2.0 mg/L dissolved oxygen**
 
-SepticScribe classifies dissolved oxygen below **2.0 mg/L** as **`BELOW REGULATORY MINIMUM`**, and
-that string is emitted into the prompt — and, through it, into a maintenance report a health
+As audited (commit `a37c4d9`, 2026-07-13), SepticScribe classified dissolved oxygen below **2.0 mg/L**
+as **`BELOW REGULATORY MINIMUM`**, and that string was emitted into the prompt — and, through it, into a maintenance report a health
 authority may read.
 
 **There is no such regulatory minimum.**
@@ -146,8 +149,10 @@ unsupported, and the word "REGULATORY" is a defect.** So:
 - **In this repository**, the regulatory framing is **cut**. The prototype emits
   `BELOW OPERATIONAL THRESHOLD — treatment impaired`, and the prompt library presents 2.0 mg/L as an
   operational target for aerobic function, sourced to the product's own corpus and labelled as such.
-- **In SepticScribe**, the string is **still live and is disclosed as an open defect**
-  (CASE-STUDY.md §5.10). Transcripts of production output are reproduced verbatim in these documents
+- **In SepticScribe**, the string was live when this register was first written (2026-07-14), and it
+  was disclosed then as an open defect. On 2026-07-15 the author reported it fixed (commit `b2f9ef2`;
+  CASE-STUDY.md §5.10). The product's code is private, so that is a dated report, not something this
+  repository can demonstrate. Transcripts of audit-time production output are reproduced verbatim in these documents
   — including the wrong word — because rewriting a transcript to flatter the system would be a worse
   offence than the defect it hides.
 

@@ -1,24 +1,40 @@
 #!/usr/bin/env node
 /**
- * MEASURE THE REAL PRODUCTION PROMPT
+ * MEASURE THE REAL PRODUCTION PROMPT  (optional -- needs the PRIVATE product repository)
  * ==================================
  * Builds SepticScribe's ACTUAL prompt -- by requiring its real `buildReportPrompt` and
  * `preprocessReportData`, not a reimplementation -- against the committed synthetic
  * record in fixtures/production/worked-example.json, and prints the sizes quoted in
  * CASE-STUDY.md §4.1.
  *
- * This exists so that every number in that table can be re-derived by a reader, rather
- * than taken on trust. It touches no customer data and makes no API calls.
+ * WHO CAN RUN IT: only someone with a local checkout of SepticScribe, which is a private
+ * repository and is not part of this one. Without that checkout this script prints an
+ * error and exits 1 (the existsSync check below), so for a reader of this repository the
+ * §4.1 prompt sizes are reported measurements, not reproducible ones -- see PROVENANCE.md.
+ * Nothing in package.json (`npm test`, `npm run demo`) runs or imports this file, and no
+ * test depends on it.
+ *
+ * WHICH PRODUCT COMMIT IT MEASURES: whatever the checkout holds. The redaction check below
+ * exits 1 if an identity value reaches the prompt, so it cannot pass against a checkout
+ * from before c391dc5 (2026-07-14), when -- per CASE-STUDY.md §6.5 -- those fields were
+ * still sent to the model. The §4.1 prompt sizes therefore come from a post-c391dc5
+ * checkout, not from the audited commit a37c4d9.
+ *
+ * This script touches no customer data and makes no API calls itself.
  *
  * Usage:
  *   node src/measure-production-prompt.js [--septic <path to Septic-Project-Root>]
  *
- * Default path: ../../Septic-Project-Root relative to this repo.
+ * Default path: a directory named Septic-Project-Root beside this repository's root
+ * directory (../Septic-Project-Root from the repository root).
  *
  * NOTE: importing the module pulls in SepticScribe's config validator, which requires a
  * JWT secret and a database URL to be present. Both are stubbed below purely so the
- * module will load. Nothing connects to anything: buildReportPrompt is pure string
- * assembly, and no customer data or database is touched.
+ * module will load, and only when they are unset (`||=`): if the shell already exports
+ * real values, they are left in place and the product's modules will see them, so run
+ * this from a shell with no product credentials exported. buildReportPrompt itself is
+ * pure string assembly, but everything the product's modules do when loaded is the
+ * product's code, not this repository's, and cannot be vouched for from here.
  */
 
 process.env.JWT_SECRET ||= 'not-a-secret-module-load-only-0000000000000000';

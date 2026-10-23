@@ -2,13 +2,16 @@
 
 Fifteen domain-specific prompts for onsite-wastewater (septic) maintenance work in British Columbia.
 
-Nine are **HARVESTED** — copied out of a real, in-production report pipeline (SepticScribe) and
-annotated. Six are **NEWLY DESIGNED** for this case study, either to fill a gap the production
+Seven are **HARVESTED** — copied out of a real, in-production report pipeline (SepticScribe) and
+annotated. Eight are **NEWLY DESIGNED** for this case study, either to fill a gap the production
 system has not built yet, or to *fix* a defect the production system actually has.
 
 Every harvested prompt cites the file and line range it came from. Every claim about the running
-system is true of the code as it exists at commit `a37c4d9` (2026-07-13). Where the production
-system is weaker than the prompt in this library, the file says so.
+system was checked against the code as it existed at commit `a37c4d9` (2026-07-13), the audited
+commit. The product's source is private, so those citations cannot be followed from this repository,
+and later product changes mentioned here (`c391dc5`, `276cf32`, `b2f9ef2`) are the author's dated
+reports — see [`../PROVENANCE.md`](../PROVENANCE.md). Where the production system is weaker than the
+prompt in this library, the file says so.
 
 ---
 
@@ -88,11 +91,12 @@ technician in these files is real.
   prompt 05 is about. Sample certification blocks are shown empty, deliberately.
 
 Payload shapes match production exactly, including a real and uncomfortable fact documented in
-**prompt 01 §7**: the production pipeline **does** send the property address, parcel ID, and
-technician name to the third-party model provider on every report — and it does not need to. The
+**prompt 01 §7**: as audited, the production pipeline **did** send the property address, parcel ID,
+and technician name to the third-party model provider on every report — and it did not need to. The
 model's use of those fields is transcription, not reasoning, and the document layer re-composes them
-locally anyway. A three-line redaction would remove them at zero cost to report quality. That is
-reported, not hidden, and it is a better finding than the privacy boast would have been.
+locally anyway. A three-line redaction removes them at zero cost to report quality; the author reports
+it shipped in `c391dc5` (2026-07-14). That is reported, not hidden, and it is a better finding than
+the privacy boast would have been.
 
 ---
 
@@ -106,7 +110,7 @@ document signed under a practitioner's registration misdescribes the work perfor
 it was performed to, and a homeowner, buyer, or lender may rely on it as something it is not.
 
 > **Where this rule comes from — stated plainly, because it carries the project.** It is
-> **practitioner knowledge**. The author works in this industry; the rule comes from doing the work
+> **practitioner knowledge**. The author has worked in this industry; the rule comes from doing the work
 > and from conversations with inspectors, maintenance providers, and WACOWMA representatives. It is
 > first-hand industry practice, and it is labelled as such rather than dressed up as a citation to a
 > regulation it is not. Treat it as informed industry practice, **not legal advice**.
@@ -127,10 +131,13 @@ it was performed to, and a homeowner, buyer, or lender may rely on it as somethi
 > **The numeric figures in this library have been checked against primary sources** and are cited in
 > [`../SOURCES.md`](../SOURCES.md): the Type 1/2/3 definitions and the 45 / 10 mg/L BOD/TSS limits
 > (BC Reg 326/2004 s.1); the 1/3-of-internal-height pump-out trigger and the 6/12-month initial
-> maintenance intervals (Standard Practice Manual V3, 2014). **One figure is not regulatory despite
-> being labelled so in the product's own output**: the **2.0 mg/L dissolved-oxygen "regulatory
+> maintenance intervals (Standard Practice Manual V3, 2014). Those sources were read on 2026-07-14
+> and have not been re-checked since. **One figure is not regulatory despite having been labelled so
+> in the product's own output**: the **2.0 mg/L dissolved-oxygen "regulatory
 > minimum"** has no basis in BC Reg 326/2004 or SPM V3 — it is an operational threshold from
-> SepticScribe's own unsourced corpus, and the word REGULATORY in that output is a defect. See
+> SepticScribe's own unsourced corpus, and the word REGULATORY in that output was a defect. It was
+> disclosed as open on 2026-07-14 and reported fixed in `b2f9ef2` on 2026-07-15 (CASE-STUDY.md
+> §5.10); prompts 02, 05, 07 and 09 were written before that report and still call it open. See
 > [`../SOURCES.md`](../SOURCES.md) and prompt 09 §6.
 >
 > That the product's regulatory ground truth is unsourced remains one of this project's real
@@ -139,5 +146,5 @@ it was performed to, and a homeowner, buyer, or lender may rely on it as somethi
 Throughout this library, the work is **maintenance**. The only places the word "inspection" appears
 are (a) verbatim quotations of the production system's prompt text **as it stood when this audit was
 performed** — it contained the word, that was a defect, it is the subject of prompt 05, and it was
-fixed in SepticScribe commit `c391dc5` (2026-07-14) — and (b) the industry component name
+reported fixed in SepticScribe commit `c391dc5` (2026-07-14) — and (b) the industry component name
 "inspection port", which is correct.

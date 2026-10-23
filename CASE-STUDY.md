@@ -7,8 +7,8 @@
 ## About this document
 
 This is a technical case study of the AI report-generation pipeline in **SepticScribe**, a
-production maintenance-management application used by onsite-wastewater contractors in British
-Columbia. The pipeline takes a technician's field measurements and produces the formal maintenance
+maintenance-management application built for onsite-wastewater contractors in British Columbia
+(pre-beta, with no customers, as of July 2026). The pipeline takes a technician's field measurements and produces the formal maintenance
 report the contractor signs and hands to the homeowner — and which a health authority may later read
 in an audit.
 
@@ -27,8 +27,8 @@ the system are documented below, including one that undermines the exact complia
 study argues is most important. That is deliberate: a case study whose subject has no flaws is
 marketing.
 
-**The serious defects found by this audit were fixed before it was published** (SepticScribe commits
-`c391dc5` and `276cf32`, 2026-07-14): the property address, land-title parcel ID and technician name were being
+**The author reports that the serious defects found by this audit were fixed before it was published**
+(SepticScribe commits `c391dc5` and `276cf32`, 2026-07-14): the property address, land-title parcel ID and technician name were being
 sent to the model provider on every generation, unnecessarily — the product is pre-beta, so no real person's data
 was in that payload, but it would have been customer PII the day it launched (§6.5);
 the regulated word *"inspection"* was sitting in the few-shot exemplar the model is told to imitate,
@@ -36,19 +36,24 @@ with nothing downstream to catch it (§6.2); a deterministic guardrail was silen
 system it was written for (§5.8); and an authoritative prompt block attributed its severity scale to a
 standard it does not come from, in the wrong jurisdiction (§3.4). Each is described here as it was
 found, then as it was fixed, with the measurement that supports it. **Publishing a live compliance
-defect in a product that real contractors sign their registration number against would have been the
-same mistake this document is about** — so the fix shipped first.
+defect in a product built for contractors to sign their registration number against would have been
+the same mistake this document is about** — so the fix shipped first. Those commits are in the private
+product, so each fix is the author's dated report, not something this repository can demonstrate;
+throughout this document, *fixed in `<commit>`* means exactly that. [`PROVENANCE.md`](PROVENANCE.md)
+separates what a reader can check here from what is reported.
 
 The claims in §6.2 are not just traced through the source; they were **measured**, with real model
 outputs, and every one of those outputs is committed to this repository (§3.7).
 
 **Every regulatory figure used here was checked against the primary source before publication** —
-BC Reg 326/2004 and the Standard Practice Manual V3 were read, not summarized. The register, with
+BC Reg 326/2004 and the Standard Practice Manual V3 were read, not summarized, on 2026-07-14, and
+have not been re-checked since. The register, with
 URLs and access dates, is [`SOURCES.md`](SOURCES.md). One figure failed that check: the system
 labelled a dissolved-oxygen reading below 2.0 mg/L as `BELOW REGULATORY MINIMUM`, and **no BC
-regulation sets a dissolved-oxygen minimum at all** (§5.10). Like the other defects, it was **fixed
+regulation sets a dissolved-oxygen minimum at all** (§5.10). Like the other defects, it was **reported fixed
 before publication** (commit `b2f9ef2`, 2026-07-15 — backend, mobile, knowledge corpus, and the
-CI drift-check that pins the labels). The audit-time transcripts that contain the wrong word are
+CI drift-check that pins the labels); in this repository the corrected label can be seen only in the
+prototype. The audit-time transcripts that contain the wrong word are
 left verbatim, because evidence should not be edited to flatter its subject.
 The domain rule at the centre of this document — that maintenance is not inspection — is **the
 author's own practitioner knowledge**, from working in this trade and talking to the people in it, and
@@ -555,8 +560,8 @@ percentages, thresholds, or classifications.
 > the product's own unsourced corpus, and it is probably sound operations — but the word *REGULATORY*
 > was an affirmative claim the system could not support, printed into a document a health authority
 > may read. **It was the same defect as the paragraph above, one layer down: real knowledge wearing a
-> borrowed uniform it never needed.** Fixed in `b2f9ef2` (2026-07-15) — the system now emits `BELOW
-> OPERATIONAL THRESHOLD`. The full account, including where else the false citation lived, is §5.10;
+> borrowed uniform it never needed.** Reported fixed in `b2f9ef2` (2026-07-15), after which the
+> product emits `BELOW OPERATIONAL THRESHOLD`. The full account, including where else the false citation lived, is §5.10;
 > the transcript above is not rewritten to hide it.
 
 It handles partial data explicitly (`:298-306`): if only some of the three tank measurements exist,
@@ -711,9 +716,12 @@ split is doing real architectural work, not cosmetics.
 The record that produces those two numbers is committed at
 `prototype/fixtures/production/worked-example.json`, and `prototype/src/measure-production-prompt.js`
 re-derives them by importing SepticScribe's own `buildReportPrompt` — not a reimplementation of it.
-Every number in this table can be reproduced; none of them has to be taken on trust. (These figures
-are post-fix: the system prompt grew by ~1,300 characters when the terminology constraint of §6.2
-was added to it.)
+Every number in this table can be reproduced by someone with the private product repository; for a
+reader of this one they are reported measurements, not checkable ones, and the script exits without
+that checkout. (The two prompt-size figures are post-fix — taken after `c391dc5`, not at `a37c4d9`
+like the rest of this section: the system prompt grew by ~1,300 characters when the terminology
+constraint of §6.2 was added to it, and the script's own redaction check cannot pass against a
+checkout that still sent identity fields to the model.)
 
 ### 4.2 Illustrative, not measured
 
@@ -931,7 +939,8 @@ time you find the same bug is when you should stop trusting the fix and start tr
 
 ### 5.9 What I would do differently
 
-**Done since this audit** (commits `c391dc5`, `276cf32`, 2026-07-14; `b2f9ef2`, 2026-07-15):
+**Done since this audit**, as reported by the author (private commits `c391dc5`, `276cf32`, 2026-07-14;
+`b2f9ef2`, 2026-07-15 — not verifiable from this repository):
 
 - ✅ **Redact PII from the prompt** (§6.5). Three fields, zero quality cost, pinned by a test.
 - ✅ **Enforce the terminology rule mechanically** (§6.2): negative constraint, blocking two-tier
@@ -961,7 +970,7 @@ time you find the same bug is when you should stop trusting the fix and start tr
   regulators, and it currently cites nothing. Every figure this repository actually uses has now been
   traced to a primary source by hand ([`SOURCES.md`](SOURCES.md)) — the corpus itself still has not.
 
-### 5.10 A threshold labelled "regulatory" that no regulation sets — **fixed in `b2f9ef2`**
+### 5.10 A threshold labelled "regulatory" that no regulation sets — **reported fixed in `b2f9ef2`**
 
 `computeNumericalClassifications()` classified a dissolved-oxygen reading below 2.0 mg/L as
 **`BELOW REGULATORY MINIMUM — treatment impaired`** — and the passing branch was worse: it emitted
@@ -990,7 +999,9 @@ citation it never needed and cannot honour — and finding the same shape twice,
 the more useful result. It says the defect is not a slip. It is a habit: when a heuristic feels solid,
 the reflex is to reach for an authority to back it, and the authority is invented.
 
-**Status: fixed in `b2f9ef2` (2026-07-15), before publication.** The corrected wording was designed
+**Status: reported fixed in `b2f9ef2` (2026-07-15), before publication.** That is the author's dated
+account of a private codebase. What this repository can show is narrower: the prototype emits the
+corrected label (`prototype/src/guardrails.js`; no prototype test pins it). The corrected wording was designed
 and tested in this repository's prototype first (`prototype/src/guardrails.js`,
 `prototype/src/prompt.js`), then ported into the product. The fix turned out to be wider than the
 one string the audit first flagged — which is itself the recurring lesson of §5.8 about trusting a
@@ -1003,13 +1014,19 @@ fix before tracing the class:
 - The **retrieval corpus** taught it too: `unknown-vendor-diagnostics.json` opened its generic-ATU
   guidance with *"BC SPM V3 requires ≥2.0 mg/L"* and closed by calling DO a "regulatory minimum",
   conflating it with the BOD5 ≤45 mg/L figure that genuinely *is* regulatory (BC Reg 326/2004 s.1).
-  The chunk now separates the two, and the production vector store was re-ingested and verified.
+  The chunk was changed to separate the two, and the production vector store was reported
+  re-ingested and verified.
 - The **CI drift-check** (`checkDiagnosticThresholds.js`) pins the new labels across backend and
   mobile, and a unit test asserts the word REGULATORY can never return to the DO classification.
 
 Every transcript of *audit-time* output in this document and in `prompts/` is left verbatim, wrong
 word included, because a case study that edits its own evidence to look better has become the thing
 it is warning about.
+
+Files written on 2026-07-14, before that report, still describe the label as an open or live
+defect: `prompts/02`, `05`, `07` and `09`, `prototype/README.md`, and a comment in
+`prototype/src/guardrails.js`. They were accurate when written and are left as dated text; the later
+status is this section and [`PROVENANCE.md`](PROVENANCE.md).
 
 ---
 
@@ -1297,8 +1314,9 @@ other export of customer data — and until this audit, it had not had one.
   long report.
 - A deterministic non-AI fallback, so the contractor can always produce a record.
 
-**What was not** — the defects this audit found. Those marked ✅ were fixed before publication
-(`c391dc5`); the rest are open and named:
+**What was not** — the defects this audit found. Those marked ✅ were reported fixed in the private
+product before publication (`c391dc5`, `276cf32`, `b2f9ef2`; see [`PROVENANCE.md`](PROVENANCE.md));
+the rest are open and named:
 
 - ✅ A compliance rule enforced in the UI, in the PDF, and in the data model — and violated in the
   few-shot exemplar the model is told to copy (§6.2). **Measured**: with that poisoned exemplar the
@@ -1313,9 +1331,10 @@ other export of customer data — and until this audit, it had not had one.
 - Validation that mostly detects and rarely blocks, whose warnings nobody counts (§5.3).
 - A user-facing setting that silently does nothing (§5.1).
 - Three sources disagreeing about the solids threshold (§5.5).
-- ✅ A regulatory corpus that cites nothing (§2.3, §6.3) — and one figure inside it that the system
-  labelled **REGULATORY** although no BC regulation sets it (§5.10, fixed in `b2f9ef2` across
-  backend, mobile, and the corpus itself; sourcing the *rest* of the corpus remains open). The scope
+- ✅ One figure in the regulatory corpus that the system labelled **REGULATORY** although no BC
+  regulation sets it (§5.10, reported fixed in `b2f9ef2` across backend, mobile, and the corpus
+  itself).
+- A regulatory corpus that cites nothing (§2.3, §6.3) — sourcing it remains open. The scope
   boundary this document rests on is *not* from that corpus: it is the author's own practitioner
   knowledge, and it is labelled as such (§2.3).
 
@@ -1327,10 +1346,12 @@ were relying on returned an empty string and nobody noticed.
 ---
 
 *Source references are to SepticScribe as audited at commit `a37c4d9` (2026-07-13). The defects
-identified above were fixed before publication — `c391dc5` and `276cf32` (2026-07-14), and `b2f9ef2`
-(2026-07-15) for the dissolved-oxygen labelling of §5.10 — and the prompt-size
-measurements in §4.1 are re-derived against that commit by `prototype/src/measure-production-prompt.js`,
-which imports the product's own prompt builder rather than reimplementing it. The terminology
+identified above were reported fixed before publication — `c391dc5` and `276cf32` (2026-07-14), and
+`b2f9ef2` (2026-07-15) for the dissolved-oxygen labelling of §5.10 — in the private product, which this
+repository cannot verify. The prompt-size measurements in §4.1 were taken against a post-`c391dc5`
+checkout by `prototype/src/measure-production-prompt.js`, which imports the product's own prompt
+builder rather than reimplementing it, and which needs that private checkout to run (see
+[`PROVENANCE.md`](PROVENANCE.md)). The terminology
 experiment in §6.2 was run live against `claude-haiku-4-5`; all 48 raw model outputs are committed in
 `prototype/fixtures/experiment-raw/`. No production database, log, or customer record was accessed in
 producing this document, and no real person, property, business, or credential number appears in it.*
